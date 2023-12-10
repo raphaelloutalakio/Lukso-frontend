@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 
 import { useWindowSize } from "hooks/useWindowSizes";
@@ -10,6 +10,8 @@ import btc from "../../../assets/chainicon/btc.png";
 import polygon from "../../../assets/chainicon/polygon.png";
 import frame from "../../../assets/chainicon/frame.png";
 import zeta from "../../../assets/chainicon/zeta.png";
+
+import { ModalContext } from "../../../contexts/ModalProvider";
 
 const StyleRightHead = styled.div`
   display: flex;
@@ -176,10 +178,15 @@ const CircularAvatar = styled.div`
   );
 `;
 
+const isUser = false;
+
 const Header = ({ isProfilePage }: { isProfilePage?: boolean }) => {
   const [barVisible, setBarVisible] = useState(true);
   const [visible, setVisible] = useState(true);
   const { width, height } = useWindowSize();
+
+  //@ts-ignore
+  const { isModalVisible, setModalVisible } = useContext(ModalContext);
 
   const onBtnClick = () => {
     if (window.innerWidth < 768) {
@@ -241,12 +248,13 @@ const Header = ({ isProfilePage }: { isProfilePage?: boolean }) => {
           </StyleChainGroup>
           <StyleMainGroup>
             <Tab />
-            {!(isProfilePage && width > 1280) ? (
+            {!isUser ? (
               <GradientButton
                 width={257}
                 height={63}
                 title="CONNECT WALLET"
                 icon="Wallet"
+                headerBtn={true}
               />
             ) : (
               <>

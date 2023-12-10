@@ -130,6 +130,7 @@ const ElemWide = ({logo}:{logo: string}) =>  ( <StyleHead>
         height={63}
         title="CONNECT WALLET"
         icon="Wallet"
+        headerBtn={true}
       />
     </StyleMainGroup>
   </StyleRightHead>

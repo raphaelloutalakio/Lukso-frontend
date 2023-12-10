@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import { useContext } from "react";
 import { Icon } from "components/icon";
 import { styled } from "styled-components";
 import { H6 } from "styles";
+import { ModalContext } from "../../contexts/ModalProvider";
 
 interface ButtonProps {
   $width: number;
@@ -48,7 +50,8 @@ export const GradientButton = ({
   width,
   height,
   marginTop,
-  borderRadius
+  borderRadius,
+  headerBtn
 }: {
   icon?: string;
   title: string;
@@ -56,9 +59,20 @@ export const GradientButton = ({
   height: number;
   marginTop?: number;
   borderRadius?: number;
+  headerBtn?: boolean
 }) => {
+
+  //@ts-ignore
+  const { isModalVisible, setModalVisible } = useContext(ModalContext);
+
+  const showModalFunc = () => {
+    if (headerBtn) {
+      setModalVisible(true);
+    }
+  }
+
   return (
-    <StyleMain $width={width} $height={height} $marginTop={marginTop} $borderRadius={borderRadius}>
+    <StyleMain $width={width} $height={height} $marginTop={marginTop} $borderRadius={borderRadius} onClick={() => { showModalFunc()}}>
       {icon && (
         <Icon
           //@ts-ignore
