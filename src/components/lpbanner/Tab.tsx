@@ -53,6 +53,11 @@ export const Tab = () => {
           EXPLORE
         </CustomLink>
 
+        <CustomLink to="/tradeHub">
+
+          TRADE HUB
+        </CustomLink>
+
 
         <CustomLink to="/staking">
 

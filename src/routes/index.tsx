@@ -67,7 +67,7 @@ const MainRouter = () => {
         <Route path="/transfer" element={<Transfer />} />
         <Route path="/transfer/redeem" element={<Redeem />} />
         <Route path="/transfer/history" element={<History />} />
-        <Route path="/nftlist" element={<NFTList />} />
+        <Route path="/tradeHub" element={<NFTList />} />
         <Route path="/swap" element={<Swap />} />
       </Route>
       <Route path="*" element={<>Page not found</>} />
