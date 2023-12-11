@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ModalContext } from "../../contexts/ModalProvider";
 import {
     Active,
@@ -19,6 +19,7 @@ import {
     SpanText,
     TitleBox,
 } from "./wallet.styled";
+import ConnectWallet from "./ConnectUniversalProfile";
 
 const closeSign = (
     <svg
@@ -52,54 +53,65 @@ const Btns = [
 ];
 
 const WalletModal = () => {
-
-    //@ts-ignore
     const { isModalVisible, setModalVisible } = useContext(ModalContext);
+    const [selectedWallet, setSelectedWallet] = useState(null);
 
     const onBgClick = () => {
         setModalVisible(false);
     };
 
-    const onModalClick = (e: { stopPropagation: () => void; }) => {
+    const onModalClick = (e) => {
         e.stopPropagation();
     };
 
+    const onWalletSelect = (wallet) => {
+        setSelectedWallet(wallet);
+    };
+
+    const onCloseClick = () => {
+        setModalVisible(false);
+        setSelectedWallet(null);
+    };
+
     if (!isModalVisible) {
-        return (<></>)
+        return <></>;
     } else {
         return (
             <FullDiv onClick={onBgClick}>
                 <BgScreen>
                     <ModalContainer onClick={onModalClick}>
-                        <TitleBox>
-                            <H_31>Connect a wallet to continue</H_31>
-                            <CloseBtn onClick={() => setModalVisible(false)}>
-                                {closeSign}
-                            </CloseBtn>
-                        </TitleBox>
-                        <Line />
-                        <Description>
-                            Choose how you want to connect. If you don't have a wallet, you
-                            can select a provider and create one
-                        </Description>
-                        <BtnBox>
-                            {Btns.map((btn, ind) => {
-                                return (
-                                    <IndBtn key={ind}>
-                                        {btn.img}
-                                        <SpanText>{btn.text}</SpanText>
-                                        <ActiveBtn>
-                                            <Active />
-                                        </ActiveBtn>
-                                    </IndBtn>
-                                );
-                            })}
-                        </BtnBox>
+                        {selectedWallet ? (
+                            <ConnectWallet wallet={selectedWallet} onCloseClick={onCloseClick} />
+                        ) : (
+                            <>
+                                <TitleBox>
+                                    <H_31>Connect a wallet to continue</H_31>
+                                    <CloseBtn onClick={onCloseClick}>{closeSign}</CloseBtn>
+                                </TitleBox>
+                                <Line />
+                                <Description>
+                                    Choose how you want to connect. If you don't have a wallet, you
+                                    can select a provider and create one
+                                </Description>
+                                <BtnBox>
+                                    {Btns.map((btn, ind) => (
+                                        <IndBtn key={ind} onClick={() => onWalletSelect(btn.text)}>
+                                            {btn.img}
+                                            <SpanText>{btn.text}</SpanText>
+                                            <ActiveBtn>
+                                                <Active />
+                                            </ActiveBtn>
+                                        </IndBtn>
+                                    ))}
+                                </BtnBox>
+                            </>
+                        )}
                     </ModalContainer>
                 </BgScreen>
             </FullDiv>
-        )
+        );
     }
-}
+};
+
 
 export default WalletModal

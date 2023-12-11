@@ -10,6 +10,7 @@ import { GradientButton } from "components/buttons";
 import { H1, H2, H4, H5, Span, H3 } from "styles";
 import Header from "components/layout/header";
 import { useWindowSize } from "hooks/useWindowSizes";
+import ConnectWallet from "components/modal/ConnectUniversalProfile";
 
 const StyleMain = styled.div`
   padding-left: 80px;
@@ -114,7 +115,10 @@ const StyleBarrier = styled.div`
     #111012 100%
   );
 `;
-const ElemWide = ({logo}:{logo: string}) =>  ( <StyleHead>
+
+
+
+const ElemWide = ({ logo }: { logo: string }) => (<StyleHead>
   <StyleLogo src={logo}></StyleLogo>
   <StyleRightHead>
     <StyleChainGroup>
@@ -125,21 +129,22 @@ const ElemWide = ({logo}:{logo: string}) =>  ( <StyleHead>
     </StyleChainGroup>
     <StyleMainGroup>
       <Tab />
-      <GradientButton
+      {/* <GradientButton
         width={257}
         height={63}
         title="CONNECT WALLET"
         icon="Wallet"
         headerBtn={true}
-      />
+      /> */}
+      <ConnectWallet />
     </StyleMainGroup>
   </StyleRightHead>
-</StyleHead> );
+</StyleHead>);
 const StyleLogo = styled.img``;
 
 export const Content = () => {
 
-  const {width}  = useWindowSize();
+  const { width } = useWindowSize();
   // const [elem, setElem] = useState(ElemWide);
   // useEffect(() => {
   //   if(width > 970)
@@ -171,7 +176,7 @@ export const Content = () => {
               <StyleBannerImg src={banner} />
             </StyleBody>
             <StyleFooter>
-              <div style={{marginLeft: '58px'}}>
+              <div style={{ marginLeft: '58px' }}>
                 <GradientButton title="VIEW MARKET" width={257} height={86} borderRadius={32} />
               </div>
               <StyleInfoGroup>
@@ -205,7 +210,7 @@ export const Content = () => {
             </StyleFooter>
           </>
         ) : (
-          <div style={{display: 'flex', flexDirection: 'column', gap: '30px', color: 'white',padding: '15px 24px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', color: 'white', padding: '15px 24px' }}>
             <H3 $weight={400} $color="white" $style="Black">
               MINT & Sell your{" "}
               <Span $color="#AF50BD">
@@ -214,43 +219,43 @@ export const Content = () => {
               ART
             </H3>
             <StyleH3 $weight={400} $color="white" $style="Actay">
-                You can quickly mint NFTs and create your own collections directly in
-                cross-chain marketplace
-              </StyleH3>
-            <div style={{position: 'relative', marginTop: '30px',}}>
-              <img src="/images/bg/mobile_bg.png" alt="" style={{width: '100%'}} />
-              <img src="/images/avatars/landing_monkey.png" alt="" style={{width: '100%', position: 'absolute', bottom: '5px', zIndex: '10', left: 0}} />
-              <div style={{position: 'absolute', bottom: '0', left: '50%', transform: 'translate(-50%, 0)'}}>
+              You can quickly mint NFTs and create your own collections directly in
+              cross-chain marketplace
+            </StyleH3>
+            <div style={{ position: 'relative', marginTop: '30px', }}>
+              <img src="/images/bg/mobile_bg.png" alt="" style={{ width: '100%' }} />
+              <img src="/images/avatars/landing_monkey.png" alt="" style={{ width: '100%', position: 'absolute', bottom: '5px', zIndex: '10', left: 0 }} />
+              <div style={{ position: 'absolute', bottom: '0', left: '50%', transform: 'translate(-50%, 0)' }}>
                 <GradientButton title="VIEW MARKET" width={257} height={56} />
               </div>
             </div>
-            <div style={{display: 'flex', justifyContent: 'space-around'}}>
-            <StyleInfoItem>
-                  <H2 $color="white" $weight={900}>
-                    950
-                  </H2>
-                  <H4 $color="white" $weight={400} $style="Actay">
-                    ART WORKS
-                  </H4>
-                </StyleInfoItem>
-                <StyleBarrier />
-                <StyleInfoItem>
-                  <H2 $color="white" $weight={900}>
-                    214
-                  </H2>
-                  <H4 $color="white" $weight={400} $style="Actay">
-                    ARTIST
-                  </H4>
-                </StyleInfoItem>
-                <StyleBarrier />
-                <StyleInfoItem>
-                  <H2 $color="white" $weight={900}>
-                    651
-                  </H2>
-                  <H4 $color="white" $weight={400} $style="Actay">
-                    AUCTION
-                  </H4>
-                </StyleInfoItem>
+            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+              <StyleInfoItem>
+                <H2 $color="white" $weight={900}>
+                  950
+                </H2>
+                <H4 $color="white" $weight={400} $style="Actay">
+                  ART WORKS
+                </H4>
+              </StyleInfoItem>
+              <StyleBarrier />
+              <StyleInfoItem>
+                <H2 $color="white" $weight={900}>
+                  214
+                </H2>
+                <H4 $color="white" $weight={400} $style="Actay">
+                  ARTIST
+                </H4>
+              </StyleInfoItem>
+              <StyleBarrier />
+              <StyleInfoItem>
+                <H2 $color="white" $weight={900}>
+                  651
+                </H2>
+                <H4 $color="white" $weight={400} $style="Actay">
+                  AUCTION
+                </H4>
+              </StyleInfoItem>
             </div>
           </div>
         )

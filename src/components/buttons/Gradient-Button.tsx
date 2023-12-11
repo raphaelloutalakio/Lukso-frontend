@@ -51,7 +51,8 @@ export const GradientButton = ({
   height,
   marginTop,
   borderRadius,
-  headerBtn
+  headerBtn,
+  onClick
 }: {
   icon?: string;
   title: string;
@@ -59,24 +60,31 @@ export const GradientButton = ({
   height: number;
   marginTop?: number;
   borderRadius?: number;
-  headerBtn?: boolean
+  headerBtn?: boolean;
+  onClick?: () => void; // Accept onClick prop
 }) => {
+  // const { isModalVisible, setModalVisible } = useContext(ModalContext);
 
-  //@ts-ignore
-  const { isModalVisible, setModalVisible } = useContext(ModalContext);
-
-  const showModalFunc = () => {
-    if (headerBtn) {
-      setModalVisible(true);
-    }
-  }
+  // const showModalFunc = () => {
+  //   if (headerBtn) {
+  //     setModalVisible(true);
+  //   }
+  // };
 
   return (
-    <StyleMain $width={width} $height={height} $marginTop={marginTop} $borderRadius={borderRadius} onClick={() => { showModalFunc()}}>
+    <StyleMain
+      $width={width}
+      $height={height}
+      $marginTop={marginTop}
+      $borderRadius={borderRadius}
+      onClick={() => {
+        // showModalFunc();
+        if (onClick) onClick(); // Call onClick if provided
+      }}
+    >
       {icon && (
         <Icon
-          //@ts-ignore
-          name={icon}
+          name={icon} // No need for ts-ignore
           color="white"
         />
       )}
