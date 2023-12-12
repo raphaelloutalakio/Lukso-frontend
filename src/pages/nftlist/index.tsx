@@ -115,7 +115,6 @@ const NFTList = () => {
         } else {
             console.error('Failed to aucion NFT!');
         }
-        // Add your logic to handle the form submission, e.g., send data to the server
     }
 
 
