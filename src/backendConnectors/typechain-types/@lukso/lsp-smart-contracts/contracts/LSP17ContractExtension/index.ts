@@ -2,4 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { LSP17Extendable } from "./LSP17Extendable";
-export type { LSP17Extension } from "./LSP17Extension";

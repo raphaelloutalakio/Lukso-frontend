@@ -34,10 +34,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.LSP17Extendable__factory>;
     getContractFactory(
-      name: "LSP17Extension",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.LSP17Extension__factory>;
-    getContractFactory(
       name: "ILSP1UniversalReceiver",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ILSP1UniversalReceiver__factory>;
@@ -78,14 +74,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Ownable__factory>;
     getContractFactory(
-      name: "IERC20",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IERC20__factory>;
-    getContractFactory(
-      name: "IERC721",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IERC721__factory>;
-    getContractFactory(
       name: "ERC165",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC165__factory>;
@@ -105,10 +93,6 @@ declare module "hardhat/types/runtime" {
       name: "MyToken",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MyToken__factory>;
-    getContractFactory(
-      name: "Testing",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Testing__factory>;
     getContractFactory(
       name: "UniversalReceiverDelegate",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -140,11 +124,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.LSP17Extendable>;
     getContractAt(
-      name: "LSP17Extension",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.LSP17Extension>;
-    getContractAt(
       name: "ILSP1UniversalReceiver",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -195,16 +174,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.Ownable>;
     getContractAt(
-      name: "IERC20",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IERC20>;
-    getContractAt(
-      name: "IERC721",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IERC721>;
-    getContractAt(
       name: "ERC165",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -229,11 +198,6 @@ declare module "hardhat/types/runtime" {
       address: string | ethers.Addressable,
       signer?: ethers.Signer
     ): Promise<Contracts.MyToken>;
-    getContractAt(
-      name: "Testing",
-      address: string | ethers.Addressable,
-      signer?: ethers.Signer
-    ): Promise<Contracts.Testing>;
     getContractAt(
       name: "UniversalReceiverDelegate",
       address: string | ethers.Addressable,
@@ -261,10 +225,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.LSP17Extendable>;
     deployContract(
-      name: "LSP17Extension",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.LSP17Extension>;
-    deployContract(
       name: "ILSP1UniversalReceiver",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ILSP1UniversalReceiver>;
@@ -305,14 +265,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Ownable>;
     deployContract(
-      name: "IERC20",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IERC20>;
-    deployContract(
-      name: "IERC721",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IERC721>;
-    deployContract(
       name: "ERC165",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.ERC165>;
@@ -332,10 +284,6 @@ declare module "hardhat/types/runtime" {
       name: "MyToken",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.MyToken>;
-    deployContract(
-      name: "Testing",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.Testing>;
     deployContract(
       name: "UniversalReceiverDelegate",
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -367,11 +315,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.LSP17Extendable>;
     deployContract(
-      name: "LSP17Extension",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.LSP17Extension>;
-    deployContract(
       name: "ILSP1UniversalReceiver",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -422,16 +365,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.Ownable>;
     deployContract(
-      name: "IERC20",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IERC20>;
-    deployContract(
-      name: "IERC721",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.IERC721>;
-    deployContract(
       name: "ERC165",
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
@@ -456,11 +389,6 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.MyToken>;
-    deployContract(
-      name: "Testing",
-      args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
-    ): Promise<Contracts.Testing>;
     deployContract(
       name: "UniversalReceiverDelegate",
       args: any[],

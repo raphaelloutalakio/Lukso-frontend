@@ -4,5 +4,4 @@
 export type { ERA } from "./ERA";
 export type { ERAHomiNft } from "./ERAHomiNft";
 export type { MyToken } from "./MyToken";
-export type { Testing } from "./Testing";
 export type { UniversalReceiverDelegate } from "./UniversalReceiverDelegate";

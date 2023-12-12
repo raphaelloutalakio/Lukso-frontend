@@ -4,5 +4,4 @@
 export { ERA__factory } from "./ERA__factory";
 export { ERAHomiNft__factory } from "./ERAHomiNft__factory";
 export { MyToken__factory } from "./MyToken__factory";
-export { Testing__factory } from "./Testing__factory";
 export { UniversalReceiverDelegate__factory } from "./UniversalReceiverDelegate__factory";

@@ -2,4 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export { LSP17Extendable__factory } from "./LSP17Extendable__factory";
-export { LSP17Extension__factory } from "./LSP17Extension__factory";

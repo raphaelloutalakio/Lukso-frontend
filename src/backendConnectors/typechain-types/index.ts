@@ -20,8 +20,6 @@ export type { IERC725Y } from "./@erc725/smart-contracts/contracts/interfaces/IE
 export { IERC725Y__factory } from "./factories/@erc725/smart-contracts/contracts/interfaces/IERC725Y__factory";
 export type { LSP17Extendable } from "./@lukso/lsp-smart-contracts/contracts/LSP17ContractExtension/LSP17Extendable";
 export { LSP17Extendable__factory } from "./factories/@lukso/lsp-smart-contracts/contracts/LSP17ContractExtension/LSP17Extendable__factory";
-export type { LSP17Extension } from "./@lukso/lsp-smart-contracts/contracts/LSP17ContractExtension/LSP17Extension";
-export { LSP17Extension__factory } from "./factories/@lukso/lsp-smart-contracts/contracts/LSP17ContractExtension/LSP17Extension__factory";
 export type { ILSP1UniversalReceiver } from "./@lukso/lsp-smart-contracts/contracts/LSP1UniversalReceiver/ILSP1UniversalReceiver";
 export { ILSP1UniversalReceiver__factory } from "./factories/@lukso/lsp-smart-contracts/contracts/LSP1UniversalReceiver/ILSP1UniversalReceiver__factory";
 export type { ILSP1UniversalReceiverDelegate } from "./@lukso/lsp-smart-contracts/contracts/LSP1UniversalReceiver/ILSP1UniversalReceiverDelegate";
@@ -42,10 +40,6 @@ export type { LSP8IdentifiableDigitalAssetCore } from "./@lukso/lsp-smart-contra
 export { LSP8IdentifiableDigitalAssetCore__factory } from "./factories/@lukso/lsp-smart-contracts/contracts/LSP8IdentifiableDigitalAsset/LSP8IdentifiableDigitalAssetCore__factory";
 export type { Ownable } from "./@openzeppelin/contracts/access/Ownable";
 export { Ownable__factory } from "./factories/@openzeppelin/contracts/access/Ownable__factory";
-export type { IERC20 } from "./@openzeppelin/contracts/token/ERC20/IERC20";
-export { IERC20__factory } from "./factories/@openzeppelin/contracts/token/ERC20/IERC20__factory";
-export type { IERC721 } from "./@openzeppelin/contracts/token/ERC721/IERC721";
-export { IERC721__factory } from "./factories/@openzeppelin/contracts/token/ERC721/IERC721__factory";
 export type { ERC165 } from "./@openzeppelin/contracts/utils/introspection/ERC165";
 export { ERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/ERC165__factory";
 export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC165";
@@ -56,7 +50,5 @@ export type { ERAHomiNft } from "./contracts/ERAHomiNft";
 export { ERAHomiNft__factory } from "./factories/contracts/ERAHomiNft__factory";
 export type { MyToken } from "./contracts/MyToken";
 export { MyToken__factory } from "./factories/contracts/MyToken__factory";
-export type { Testing } from "./contracts/Testing";
-export { Testing__factory } from "./factories/contracts/Testing__factory";
 export type { UniversalReceiverDelegate } from "./contracts/UniversalReceiverDelegate";
 export { UniversalReceiverDelegate__factory } from "./factories/contracts/UniversalReceiverDelegate__factory";

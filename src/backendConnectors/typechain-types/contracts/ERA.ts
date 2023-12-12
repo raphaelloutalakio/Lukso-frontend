@@ -26,16 +26,37 @@ import type {
 export interface ERAInterface extends Interface {
   getFunction(
     nameOrSignature:
+      | "acceptOffer"
+      | "add_royalty_collection"
+      | "applyForCollectionLaunch"
+      | "approveCollectionApplication"
       | "auctions"
       | "bundles"
+      | "buy"
+      | "buyBundle"
+      | "calculateFees"
+      | "calculateRoyaltyCollectionFee"
+      | "changePrice"
+      | "check_exists_royalty_collection"
       | "collectionApplications"
+      | "createBundle"
+      | "delist"
+      | "endAuction"
       | "list"
+      | "listAuction"
       | "listIdToOffers"
       | "lists"
+      | "makeOffer"
       | "marketplace"
+      | "mutateCollateralFees"
+      | "mutateFeesPbs"
+      | "mutateOwner"
       | "omnichainEraAddr"
       | "owner"
+      | "placeBid"
+      | "removeOffer"
       | "royaltyCollections"
+      | "update_royalty_collection"
   ): FunctionFragment;
 
   getEvent(
@@ -56,6 +77,22 @@ export interface ERAInterface extends Interface {
   ): EventFragment;
 
   encodeFunctionData(
+    functionFragment: "acceptOffer",
+    values: [BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "add_royalty_collection",
+    values: [AddressLike, BigNumberish, AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "applyForCollectionLaunch",
+    values: [string, AddressLike, AddressLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "approveCollectionApplication",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "auctions",
     values: [BigNumberish]
   ): string;
@@ -63,8 +100,41 @@ export interface ERAInterface extends Interface {
     functionFragment: "bundles",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "buy", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "buyBundle",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "calculateFees",
+    values: [BigNumberish, BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "calculateRoyaltyCollectionFee",
+    values: [AddressLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "changePrice",
+    values: [BigNumberish, AddressLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "check_exists_royalty_collection",
+    values: [AddressLike]
+  ): string;
   encodeFunctionData(
     functionFragment: "collectionApplications",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "createBundle",
+    values: [AddressLike[], BytesLike[], AddressLike[], BigNumberish[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "delist",
+    values: [AddressLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "endAuction",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
@@ -72,13 +142,41 @@ export interface ERAInterface extends Interface {
     values: [AddressLike, BytesLike, AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "listAuction",
+    values: [
+      AddressLike,
+      BytesLike,
+      AddressLike,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish
+    ]
+  ): string;
+  encodeFunctionData(
     functionFragment: "listIdToOffers",
     values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "lists", values: [BigNumberish]): string;
   encodeFunctionData(
+    functionFragment: "makeOffer",
+    values: [BigNumberish, AddressLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "marketplace",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mutateCollateralFees",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mutateFeesPbs",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mutateOwner",
+    values: [AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "omnichainEraAddr",
@@ -86,24 +184,93 @@ export interface ERAInterface extends Interface {
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "placeBid",
+    values: [BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "removeOffer",
+    values: [BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "royaltyCollections",
     values: [AddressLike]
   ): string;
+  encodeFunctionData(
+    functionFragment: "update_royalty_collection",
+    values: [AddressLike, BigNumberish, AddressLike]
+  ): string;
 
+  decodeFunctionResult(
+    functionFragment: "acceptOffer",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "add_royalty_collection",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "applyForCollectionLaunch",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "approveCollectionApplication",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "auctions", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bundles", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "buy", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "buyBundle", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "calculateFees",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "calculateRoyaltyCollectionFee",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "changePrice",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "check_exists_royalty_collection",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "collectionApplications",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "createBundle",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "delist", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "endAuction", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "list", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "listAuction",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "listIdToOffers",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "lists", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "makeOffer", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "marketplace",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "mutateCollateralFees",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "mutateFeesPbs",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "mutateOwner",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -111,8 +278,17 @@ export interface ERAInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "placeBid", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "removeOffer",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "royaltyCollections",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "update_royalty_collection",
     data: BytesLike
   ): Result;
 }
@@ -121,7 +297,7 @@ export namespace AuctionCreatedEvent {
   export type InputTuple = [
     auctionId: BigNumberish,
     nftAddress: AddressLike,
-    tokenId: BigNumberish,
+    tokenId: BytesLike,
     paymentToken: AddressLike,
     minBid: BigNumberish,
     minBidIncrement: BigNumberish,
@@ -133,7 +309,7 @@ export namespace AuctionCreatedEvent {
   export type OutputTuple = [
     auctionId: bigint,
     nftAddress: string,
-    tokenId: bigint,
+    tokenId: string,
     paymentToken: string,
     minBid: bigint,
     minBidIncrement: bigint,
@@ -145,7 +321,7 @@ export namespace AuctionCreatedEvent {
   export interface OutputObject {
     auctionId: bigint;
     nftAddress: string;
-    tokenId: bigint;
+    tokenId: string;
     paymentToken: string;
     minBid: bigint;
     minBidIncrement: bigint;
@@ -164,7 +340,7 @@ export namespace AuctionEndedEvent {
   export type InputTuple = [
     auctionId: BigNumberish,
     nftAddress: AddressLike,
-    tokenId: BigNumberish,
+    tokenId: BytesLike,
     paymentToken: AddressLike,
     winner: AddressLike,
     winningBid: BigNumberish
@@ -172,7 +348,7 @@ export namespace AuctionEndedEvent {
   export type OutputTuple = [
     auctionId: bigint,
     nftAddress: string,
-    tokenId: bigint,
+    tokenId: string,
     paymentToken: string,
     winner: string,
     winningBid: bigint
@@ -180,7 +356,7 @@ export namespace AuctionEndedEvent {
   export interface OutputObject {
     auctionId: bigint;
     nftAddress: string;
-    tokenId: bigint;
+    tokenId: string;
     paymentToken: string;
     winner: string;
     winningBid: bigint;
@@ -217,7 +393,7 @@ export namespace BundleCreatedEvent {
   export type InputTuple = [
     bundle_id: BigNumberish,
     nftAddresses: AddressLike[],
-    tokenIds: BigNumberish[],
+    tokenIds: BytesLike[],
     paymentTokens: AddressLike[],
     prices: BigNumberish[],
     seller: AddressLike
@@ -225,7 +401,7 @@ export namespace BundleCreatedEvent {
   export type OutputTuple = [
     bundle_id: bigint,
     nftAddresses: string[],
-    tokenIds: bigint[],
+    tokenIds: string[],
     paymentTokens: string[],
     prices: bigint[],
     seller: string
@@ -233,7 +409,7 @@ export namespace BundleCreatedEvent {
   export interface OutputObject {
     bundle_id: bigint;
     nftAddresses: string[];
-    tokenIds: bigint[];
+    tokenIds: string[];
     paymentTokens: string[];
     prices: bigint[];
     seller: string;
@@ -374,7 +550,7 @@ export namespace ItemPurchasedEvent {
     lister: AddressLike,
     listId: BigNumberish,
     nftAddress: AddressLike,
-    tokenId: BigNumberish,
+    tokenId: BytesLike,
     paymentToken: AddressLike,
     totalPrice: BigNumberish
   ];
@@ -383,7 +559,7 @@ export namespace ItemPurchasedEvent {
     lister: string,
     listId: bigint,
     nftAddress: string,
-    tokenId: bigint,
+    tokenId: string,
     paymentToken: string,
     totalPrice: bigint
   ];
@@ -392,7 +568,7 @@ export namespace ItemPurchasedEvent {
     lister: string;
     listId: bigint;
     nftAddress: string;
-    tokenId: bigint;
+    tokenId: string;
     paymentToken: string;
     totalPrice: bigint;
   }
@@ -520,13 +696,46 @@ export interface ERA extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  acceptOffer: TypedContractMethod<
+    [_listId: BigNumberish, _offerId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  add_royalty_collection: TypedContractMethod<
+    [
+      _nftAddress: AddressLike,
+      bps: BigNumberish,
+      royaltyCollector: AddressLike
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  applyForCollectionLaunch: TypedContractMethod<
+    [
+      _collectionName: string,
+      _NFTContract: AddressLike,
+      _royaltyCollector: AddressLike,
+      _bps: BigNumberish
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  approveCollectionApplication: TypedContractMethod<
+    [applicationId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
   auctions: TypedContractMethod<
     [arg0: BigNumberish],
     [
       [
         bigint,
         string,
-        bigint,
+        string,
         string,
         bigint,
         bigint,
@@ -540,7 +749,7 @@ export interface ERA extends BaseContract {
       ] & {
         auctionId: bigint;
         nftAddress: string;
-        tokenId: bigint;
+        tokenId: string;
         paymentToken: string;
         minBid: bigint;
         minBidIncrement: bigint;
@@ -568,6 +777,38 @@ export interface ERA extends BaseContract {
     "view"
   >;
 
+  buy: TypedContractMethod<[_listId: BigNumberish], [void], "nonpayable">;
+
+  buyBundle: TypedContractMethod<
+    [bundle_id: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  calculateFees: TypedContractMethod<
+    [amount: BigNumberish, fee_pbs: BigNumberish, collateral_fee: BigNumberish],
+    [bigint],
+    "view"
+  >;
+
+  calculateRoyaltyCollectionFee: TypedContractMethod<
+    [_nftAddress: AddressLike, amount: BigNumberish],
+    [bigint],
+    "view"
+  >;
+
+  changePrice: TypedContractMethod<
+    [_listId: BigNumberish, _paymentToken: AddressLike, _ask: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  check_exists_royalty_collection: TypedContractMethod<
+    [_nftAddress: AddressLike],
+    [boolean],
+    "view"
+  >;
+
   collectionApplications: TypedContractMethod<
     [arg0: BigNumberish],
     [
@@ -584,12 +825,49 @@ export interface ERA extends BaseContract {
     "view"
   >;
 
+  createBundle: TypedContractMethod<
+    [
+      _nftAddresses: AddressLike[],
+      _tokenIds: BytesLike[],
+      _paymentTokens: AddressLike[],
+      _prices: BigNumberish[]
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  delist: TypedContractMethod<
+    [_lister: AddressLike, _listId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  endAuction: TypedContractMethod<
+    [_auctionId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
   list: TypedContractMethod<
     [
       _nftAddress: AddressLike,
       _tokenId: BytesLike,
       _paymentToken: AddressLike,
       _ask: BigNumberish
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  listAuction: TypedContractMethod<
+    [
+      _nftAddress: AddressLike,
+      _tokenId: BytesLike,
+      _paymentToken: AddressLike,
+      _minBid: BigNumberish,
+      _minBidIncrement: BigNumberish,
+      _startTime: BigNumberish,
+      _expirationTime: BigNumberish
     ],
     [void],
     "nonpayable"
@@ -637,6 +915,16 @@ export interface ERA extends BaseContract {
     "view"
   >;
 
+  makeOffer: TypedContractMethod<
+    [
+      _listId: BigNumberish,
+      _paymentToken: AddressLike,
+      _offerPrice: BigNumberish
+    ],
+    [void],
+    "nonpayable"
+  >;
+
   marketplace: TypedContractMethod<
     [],
     [
@@ -654,9 +942,39 @@ export interface ERA extends BaseContract {
     "view"
   >;
 
+  mutateCollateralFees: TypedContractMethod<
+    [new_collateral_fee: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  mutateFeesPbs: TypedContractMethod<
+    [new_fee_pbs: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  mutateOwner: TypedContractMethod<
+    [new_owner: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
   omnichainEraAddr: TypedContractMethod<[], [string], "view">;
 
   owner: TypedContractMethod<[], [string], "view">;
+
+  placeBid: TypedContractMethod<
+    [_auctionId: BigNumberish, _bidAmount: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  removeOffer: TypedContractMethod<
+    [_listId: BigNumberish, _offerId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
 
   royaltyCollections: TypedContractMethod<
     [arg0: AddressLike],
@@ -670,10 +988,53 @@ export interface ERA extends BaseContract {
     "view"
   >;
 
+  update_royalty_collection: TypedContractMethod<
+    [
+      _nftAddress: AddressLike,
+      bps: BigNumberish,
+      royaltyCollector: AddressLike
+    ],
+    [void],
+    "nonpayable"
+  >;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
 
+  getFunction(
+    nameOrSignature: "acceptOffer"
+  ): TypedContractMethod<
+    [_listId: BigNumberish, _offerId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "add_royalty_collection"
+  ): TypedContractMethod<
+    [
+      _nftAddress: AddressLike,
+      bps: BigNumberish,
+      royaltyCollector: AddressLike
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "applyForCollectionLaunch"
+  ): TypedContractMethod<
+    [
+      _collectionName: string,
+      _NFTContract: AddressLike,
+      _royaltyCollector: AddressLike,
+      _bps: BigNumberish
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "approveCollectionApplication"
+  ): TypedContractMethod<[applicationId: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "auctions"
   ): TypedContractMethod<
@@ -682,7 +1043,7 @@ export interface ERA extends BaseContract {
       [
         bigint,
         string,
-        bigint,
+        string,
         string,
         bigint,
         bigint,
@@ -696,7 +1057,7 @@ export interface ERA extends BaseContract {
       ] & {
         auctionId: bigint;
         nftAddress: string;
-        tokenId: bigint;
+        tokenId: string;
         paymentToken: string;
         minBid: bigint;
         minBidIncrement: bigint;
@@ -725,6 +1086,36 @@ export interface ERA extends BaseContract {
     "view"
   >;
   getFunction(
+    nameOrSignature: "buy"
+  ): TypedContractMethod<[_listId: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "buyBundle"
+  ): TypedContractMethod<[bundle_id: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "calculateFees"
+  ): TypedContractMethod<
+    [amount: BigNumberish, fee_pbs: BigNumberish, collateral_fee: BigNumberish],
+    [bigint],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "calculateRoyaltyCollectionFee"
+  ): TypedContractMethod<
+    [_nftAddress: AddressLike, amount: BigNumberish],
+    [bigint],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "changePrice"
+  ): TypedContractMethod<
+    [_listId: BigNumberish, _paymentToken: AddressLike, _ask: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "check_exists_royalty_collection"
+  ): TypedContractMethod<[_nftAddress: AddressLike], [boolean], "view">;
+  getFunction(
     nameOrSignature: "collectionApplications"
   ): TypedContractMethod<
     [arg0: BigNumberish],
@@ -742,6 +1133,28 @@ export interface ERA extends BaseContract {
     "view"
   >;
   getFunction(
+    nameOrSignature: "createBundle"
+  ): TypedContractMethod<
+    [
+      _nftAddresses: AddressLike[],
+      _tokenIds: BytesLike[],
+      _paymentTokens: AddressLike[],
+      _prices: BigNumberish[]
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "delist"
+  ): TypedContractMethod<
+    [_lister: AddressLike, _listId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "endAuction"
+  ): TypedContractMethod<[_auctionId: BigNumberish], [void], "nonpayable">;
+  getFunction(
     nameOrSignature: "list"
   ): TypedContractMethod<
     [
@@ -749,6 +1162,21 @@ export interface ERA extends BaseContract {
       _tokenId: BytesLike,
       _paymentToken: AddressLike,
       _ask: BigNumberish
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "listAuction"
+  ): TypedContractMethod<
+    [
+      _nftAddress: AddressLike,
+      _tokenId: BytesLike,
+      _paymentToken: AddressLike,
+      _minBid: BigNumberish,
+      _minBidIncrement: BigNumberish,
+      _startTime: BigNumberish,
+      _expirationTime: BigNumberish
     ],
     [void],
     "nonpayable"
@@ -798,6 +1226,17 @@ export interface ERA extends BaseContract {
     "view"
   >;
   getFunction(
+    nameOrSignature: "makeOffer"
+  ): TypedContractMethod<
+    [
+      _listId: BigNumberish,
+      _paymentToken: AddressLike,
+      _offerPrice: BigNumberish
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
     nameOrSignature: "marketplace"
   ): TypedContractMethod<
     [],
@@ -816,11 +1255,38 @@ export interface ERA extends BaseContract {
     "view"
   >;
   getFunction(
+    nameOrSignature: "mutateCollateralFees"
+  ): TypedContractMethod<
+    [new_collateral_fee: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "mutateFeesPbs"
+  ): TypedContractMethod<[new_fee_pbs: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "mutateOwner"
+  ): TypedContractMethod<[new_owner: AddressLike], [void], "nonpayable">;
+  getFunction(
     nameOrSignature: "omnichainEraAddr"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "owner"
   ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "placeBid"
+  ): TypedContractMethod<
+    [_auctionId: BigNumberish, _bidAmount: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "removeOffer"
+  ): TypedContractMethod<
+    [_listId: BigNumberish, _offerId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
   getFunction(
     nameOrSignature: "royaltyCollections"
   ): TypedContractMethod<
@@ -833,6 +1299,17 @@ export interface ERA extends BaseContract {
       }
     ],
     "view"
+  >;
+  getFunction(
+    nameOrSignature: "update_royalty_collection"
+  ): TypedContractMethod<
+    [
+      _nftAddress: AddressLike,
+      bps: BigNumberish,
+      royaltyCollector: AddressLike
+    ],
+    [void],
+    "nonpayable"
   >;
 
   getEvent(
@@ -928,7 +1405,7 @@ export interface ERA extends BaseContract {
   >;
 
   filters: {
-    "AuctionCreated(uint256,address,uint64,address,uint256,uint256,uint256,uint256,address,address)": TypedContractEvent<
+    "AuctionCreated(uint256,address,bytes32,address,uint256,uint256,uint256,uint256,address,address)": TypedContractEvent<
       AuctionCreatedEvent.InputTuple,
       AuctionCreatedEvent.OutputTuple,
       AuctionCreatedEvent.OutputObject
@@ -939,7 +1416,7 @@ export interface ERA extends BaseContract {
       AuctionCreatedEvent.OutputObject
     >;
 
-    "AuctionEnded(uint256,address,uint64,address,address,uint256)": TypedContractEvent<
+    "AuctionEnded(uint256,address,bytes32,address,address,uint256)": TypedContractEvent<
       AuctionEndedEvent.InputTuple,
       AuctionEndedEvent.OutputTuple,
       AuctionEndedEvent.OutputObject
@@ -961,7 +1438,7 @@ export interface ERA extends BaseContract {
       BidPlacedEvent.OutputObject
     >;
 
-    "BundleCreated(uint256,address[],uint64[],address[],uint256[],address)": TypedContractEvent<
+    "BundleCreated(uint256,address[],bytes32[],address[],uint256[],address)": TypedContractEvent<
       BundleCreatedEvent.InputTuple,
       BundleCreatedEvent.OutputTuple,
       BundleCreatedEvent.OutputObject
@@ -1027,7 +1504,7 @@ export interface ERA extends BaseContract {
       ItemDelistedEvent.OutputObject
     >;
 
-    "ItemPurchased(address,address,uint64,address,uint64,address,uint256)": TypedContractEvent<
+    "ItemPurchased(address,address,uint64,address,bytes32,address,uint256)": TypedContractEvent<
       ItemPurchasedEvent.InputTuple,
       ItemPurchasedEvent.OutputTuple,
       ItemPurchasedEvent.OutputObject

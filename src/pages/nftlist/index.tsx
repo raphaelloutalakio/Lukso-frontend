@@ -24,11 +24,18 @@ import {
 
 import { useEffect, useState } from "react";
 import Img from '/images/avatars/empty.png';
+import { uploadJson, uploadToIpfs } from "backendConnectors/utils/IpfsHelpers";
+import { listNFT } from "backendConnectors/eraConnector";
+import { ethers } from "ethers";
+import { WalletState } from "@web3-onboard/core";
+import { useConnectWallet } from "@web3-onboard/react";
+
 
 const NFTList = () => {
+    const [{ wallet }] = useConnectWallet()
     const [tab, setTab] = useState(true);
     const [listFormData, setListFormData] = useState({
-        image: Img,
+        imageFile: Img,
         nftContractAddress: "",
         tokenId: "",
         paymentTokenAddress: "",
@@ -36,7 +43,7 @@ const NFTList = () => {
     });
 
     const [auctionFormData, setAuctionFormData] = useState({
-        image: Img,
+        imageFile: Img,
         nftContractAddress: "",
         tokenId: "",
         paymentTokenAddress: "",
@@ -48,19 +55,53 @@ const NFTList = () => {
     });
 
     const handleImageUpload = (e, formType) => {
-        const imageFile = e.target.files[0];
-        const imageUrl = URL.createObjectURL(imageFile);
+        const imageFilefromUpload = e.target.files[0];
+
+        // const imgCID = await uploadToIpfs(imageFile)
+
+        // const json: NFTJson = {
+        //     // description: data.itemDescription,
+        //     // name: data.itemName,
+        //     image: `ipfs://${imgCID}`,
+        // }
+
+        // console.log(JSON.stringify(json))
+        // const tokenURI = await uploadJson(json)
+        // console.log("token URI : ", tokenURI)
+        // return tokenURI
 
         if (formType === 'list') {
-            setListFormData({ ...listFormData, image: imageUrl });
+            setListFormData({ ...listFormData, imageFile: imageFilefromUpload });
         } else {
-            setAuctionFormData({ ...auctionFormData, image: imageUrl });
+            setAuctionFormData({ ...auctionFormData, imageFile: imageFilefromUpload });
         }
     }
 
-    const handleListFormSubmit = () => {
+    // const fetchUri = async (param) => {
+    //     const imgCID = await uploadToIpfs(param);
+
+    //     const json: NFTJson = {
+    //         // description: data.itemDescription,
+    //         // name: data.itemName,
+    //         image: `ipfs://${imgCID}`,
+    //     }
+
+    //     console.log(JSON.stringify(json))
+    //     const tokenURI = await uploadJson(json)
+    //     console.log("token URI : ", tokenURI)
+    //     return tokenURI
+
+    // }
+
+    const handleListFormSubmit = async () => {
         console.log('List NFT Form Data:', listFormData);
-        // Add your logic to handle the form submission, e.g., send data to the server
+
+
+
+        await listNFT(wallet!, listFormData);
+
+
+
     }
 
     const handleAuctionFormSubmit = () => {
@@ -88,7 +129,7 @@ const NFTList = () => {
                             <TabBody>
                                 <TDStar src='/images/icons/star.svg' />
                                 <MainDiv>
-                                    <ImageDivCol>
+                                    {/* <ImageDivCol>
                                         <CustomFile>
                                             Image Upload
                                             <input
@@ -97,7 +138,7 @@ const NFTList = () => {
                                             />
                                         </CustomFile>
                                         <img src={listFormData.image} width={100} alt="" style={{ width: '100%' }} />
-                                    </ImageDivCol>
+                                    </ImageDivCol> */}
                                     <MainContainer>
                                         <MainRow style={{ display: 'flex', gap: '40px', width: '100%' }}>
                                             <LabelTextDiv>
@@ -145,7 +186,7 @@ const NFTList = () => {
                             <TabBody>
                                 <TDStar src='/images/icons/star.svg' />
                                 <MainDiv>
-                                    <ImageDivCol>
+                                    {/* <ImageDivCol>
                                         <CustomFile>
                                             Image Upload
                                             <input
@@ -154,7 +195,7 @@ const NFTList = () => {
                                             />
                                         </CustomFile>
                                         <img src={auctionFormData.image} width={100} alt="" style={{ width: '100%' }} />
-                                    </ImageDivCol>
+                                    </ImageDivCol> */}
                                     <MainContainer>
                                         <MainRow>
                                             <LabelTextDiv>
