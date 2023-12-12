@@ -1460,7 +1460,7 @@ export interface ERA extends BaseContract {
       BundlePurchasedEvent.OutputObject
     >;
 
-    "ChangePrice(uint64,address,uint64)": TypedContractEvent<
+    "ChangePrice(uint256,address,uint256)": TypedContractEvent<
       ChangePriceEvent.InputTuple,
       ChangePriceEvent.OutputTuple,
       ChangePriceEvent.OutputObject
@@ -1493,7 +1493,7 @@ export interface ERA extends BaseContract {
       CollectionApplicationApprovedEvent.OutputObject
     >;
 
-    "ItemDelisted(uint64,address,bytes32,address,uint128,address,address)": TypedContractEvent<
+    "ItemDelisted(uint256,address,bytes32,address,uint256,address,address)": TypedContractEvent<
       ItemDelistedEvent.InputTuple,
       ItemDelistedEvent.OutputTuple,
       ItemDelistedEvent.OutputObject
@@ -1504,7 +1504,7 @@ export interface ERA extends BaseContract {
       ItemDelistedEvent.OutputObject
     >;
 
-    "ItemPurchased(address,address,uint64,address,bytes32,address,uint256)": TypedContractEvent<
+    "ItemPurchased(address,address,uint256,address,bytes32,address,uint256)": TypedContractEvent<
       ItemPurchasedEvent.InputTuple,
       ItemPurchasedEvent.OutputTuple,
       ItemPurchasedEvent.OutputObject
@@ -1515,7 +1515,7 @@ export interface ERA extends BaseContract {
       ItemPurchasedEvent.OutputObject
     >;
 
-    "Listed(uint64,address,address,bytes32,address,uint128,address)": TypedContractEvent<
+    "Listed(uint256,address,address,bytes32,address,uint256,address)": TypedContractEvent<
       ListedEvent.InputTuple,
       ListedEvent.OutputTuple,
       ListedEvent.OutputObject
@@ -1526,7 +1526,7 @@ export interface ERA extends BaseContract {
       ListedEvent.OutputObject
     >;
 
-    "OfferRemoved(uint64,uint64)": TypedContractEvent<
+    "OfferRemoved(uint256,uint256)": TypedContractEvent<
       OfferRemovedEvent.InputTuple,
       OfferRemovedEvent.OutputTuple,
       OfferRemovedEvent.OutputObject
@@ -1537,7 +1537,7 @@ export interface ERA extends BaseContract {
       OfferRemovedEvent.OutputObject
     >;
 
-    "Offered(uint64,uint64,address,address,uint64)": TypedContractEvent<
+    "Offered(uint256,uint256,address,address,uint256)": TypedContractEvent<
       OfferedEvent.InputTuple,
       OfferedEvent.OutputTuple,
       OfferedEvent.OutputObject

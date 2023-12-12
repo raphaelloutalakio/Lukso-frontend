@@ -15,8 +15,25 @@ interface NFTListingData {
     // max: string;
 }
 
-const eraContractAddr = "0xf9093B00805f9220f395D427c9afbC1E43CE3deb";
+interface AUCTIONData {
+    nftContractAddress: string;
+    tokenId: string;
+    paymentTokenAddress: string;
+    minAmount: string;
+    image: string;
+    start: string;
+    end: string;
+    minBidIncreament: string;
+    maxBidIncreament: string;
+}
+
+const eraContractAddr = "0x8455ec7621CE3Ff3614718432f890453ea70F79e";
 const hominftAddr = "0x175C3710cfBE66051A0A94baF231eDe867892806";
+
+
+const convertAmountToEther = (amount: string) => {
+    return (ethers.parseUnits(amount.toString(), 'ether')).toString();
+};
 
 
 export async function listNFT(wallet: WalletState, formData: NFTListingData): Promise<boolean> {
@@ -49,3 +66,39 @@ export async function listNFT(wallet: WalletState, formData: NFTListingData): Pr
         return false;
     }
 }
+
+export async function auctionNFT(wallet: WalletState, formData: AUCTIONData): Promise<boolean> {
+    try {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+
+        const era = ERA__factory.connect(eraContractAddr, signer);
+        const eraHomiNFT = ERAHomiNft__factory.connect(formData.nftContractAddress, signer);
+
+
+        /// data
+        const startTime = Math.floor(new Date(formData?.start).getTime() / 1000);
+        const expirationTime = Math.floor(new Date(formData?.end).getTime() / 1000);
+        const min = convertAmountToEther(formData.minBidIncreament);
+        const amount = convertAmountToEther(formData.minAmount);
+
+
+
+        await eraHomiNFT.authorizeOperator(eraContractAddr, formData.tokenId, "0x", { gasLimit: 200000 });
+
+        await new Promise((resolve) => setTimeout(resolve, 10000));
+
+        await era.listAuction(
+            formData.nftContractAddress,
+            formData.tokenId,
+            formData.paymentTokenAddress,
+            min, amount, startTime, expirationTime,
+            { gasLimit: 200000 }
+        );
+        return true;
+    } catch (error) {
+        console.error('Error listing NFT:', error);
+        return false;
+    }
+}
+
