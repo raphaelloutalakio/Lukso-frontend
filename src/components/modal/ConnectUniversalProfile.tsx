@@ -40,9 +40,17 @@ const ConnectWallet = () => {
     if (onboardWallet?.provider && account) {
         return (
             <div>
-                <button className="btn" onClick={() => { disconnect({ label: wallet }) }}>
+                {/* <button className="btn" onClick={() => { disconnect({ label: wallet }) }}>
                     Disconnect
-                </button>
+                </button> */}
+
+                <GradientButton
+                    title="Disconnect Profile"
+                    width={270}
+                    height={63}
+                    icon="Wallet"
+                    onClick={() => { disconnect({ label: wallet }) }}
+                />
             </div>
         )
     }
