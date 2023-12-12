@@ -436,7 +436,7 @@ export const MainContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 32px;
-    width: 78%;
+    width: 100%;
     @media (max-width: 780px){
         width: 100%;
         align-items: center;
