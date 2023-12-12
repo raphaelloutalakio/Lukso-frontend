@@ -36,7 +36,7 @@ const convertAmountToEther = (amount: string) => {
 };
 
 
-export async function listNFT(wallet: WalletState, formData: NFTListingData): Promise<boolean> {
+export async function listNFT(wallet: WalletState, formData: NFTListingData, isloading: Function): Promise<boolean> {
     try {
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
@@ -51,7 +51,9 @@ export async function listNFT(wallet: WalletState, formData: NFTListingData): Pr
         // await minNftTx.wait();
         const approvalTx = await eraHomiNFT.authorizeOperator(eraContractAddr, formData.tokenId, "0x", { gasLimit: 200000 });
 
+        isloading(true);
         await new Promise((resolve) => setTimeout(resolve, 10000));
+        isloading(false);
 
         // const approvalTxRec = await approvalTx.wait();
         // console.log("approval tx rec : ", approvalTxRec);
@@ -67,7 +69,7 @@ export async function listNFT(wallet: WalletState, formData: NFTListingData): Pr
     }
 }
 
-export async function auctionNFT(wallet: WalletState, formData: AUCTIONData): Promise<boolean> {
+export async function auctionNFT(wallet: WalletState, formData: AUCTIONData, isloading: Function): Promise<boolean> {
     try {
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
@@ -86,7 +88,9 @@ export async function auctionNFT(wallet: WalletState, formData: AUCTIONData): Pr
 
         await eraHomiNFT.authorizeOperator(eraContractAddr, formData.tokenId, "0x", { gasLimit: 200000 });
 
+        isloading(true);
         await new Promise((resolve) => setTimeout(resolve, 10000));
+        isloading(false);
 
         await era.listAuction(
             formData.nftContractAddress,

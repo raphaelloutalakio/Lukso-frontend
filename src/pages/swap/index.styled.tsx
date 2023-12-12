@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const StyleBody = styled.div`
  max-width: 1440px;
  margin: auto;
- /* margin-top: 113px; */
+ margin-top: 113px;
  width: 100%;
 `;
 
