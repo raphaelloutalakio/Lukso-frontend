@@ -25,7 +25,7 @@ import {
 import { useEffect, useState } from "react";
 import Img from '/images/avatars/empty.png';
 import { uploadJson, uploadToIpfs } from "backendConnectors/utils/IpfsHelpers";
-import { listNFT } from "backendConnectors/eraConnector";
+import { listNFT, auctionNFT } from "backendConnectors/eraConnector";
 import { ethers } from "ethers";
 import { WalletState } from "@web3-onboard/core";
 import { useConnectWallet } from "@web3-onboard/react";
@@ -47,11 +47,11 @@ const NFTList = () => {
         nftContractAddress: "",
         tokenId: "",
         paymentTokenAddress: "",
-        amount: "",
+        minAmount: "",
         start: "",
         end: "",
-        mintBid: "",
-        max: ""
+        minBidIncreament: "",
+        maxBidIncreament: ""
     });
 
     const handleImageUpload = (e, formType) => {
@@ -95,20 +95,28 @@ const NFTList = () => {
 
     const handleListFormSubmit = async () => {
         console.log('List NFT Form Data:', listFormData);
+        const success = await listNFT(wallet!, listFormData);
+        if (success) {
 
+            console.log('NFT listed successfully!');
 
-
-        await listNFT(wallet!, listFormData);
-
-
-
+        } else {
+            console.error('Failed to list NFT!');
+        }
     }
-
-    const handleAuctionFormSubmit = () => {
+    const handleAuctionFormSubmit = async () => {
         console.log('Auction NFT Form Data:', auctionFormData);
+
+        const success = await auctionNFT(wallet!, auctionFormData);
+        if (success) {
+
+            console.log('NFT listed for auction sucessfully!');
+
+        } else {
+            console.error('Failed to aucion NFT!');
+        }
         // Add your logic to handle the form submission, e.g., send data to the server
     }
-
 
 
     return (
@@ -225,11 +233,11 @@ const NFTList = () => {
                                                 />
                                             </LabelTextDiv>
                                             <LabelTextDiv>
-                                                <LabelNam htmlFor="">Amount</LabelNam>
+                                                <LabelNam htmlFor="">Minimum bid</LabelNam>
                                                 <TabInput
                                                     type="text"
-                                                    placeholder="Enter the amount"
-                                                    onChange={(e) => setAuctionFormData({ ...auctionFormData, amount: e.target.value })}
+                                                    placeholder="Enter the minimum bid amount"
+                                                    onChange={(e) => setAuctionFormData({ ...auctionFormData, minAmount: e.target.value })}
                                                 />
                                             </LabelTextDiv>
                                         </MainRow>
@@ -254,21 +262,21 @@ const NFTList = () => {
                                             </MainRowDate>
                                             <MainRowDate>
                                                 <LabelTextDiv>
-                                                    <LabelNam htmlFor="">Mint Bid</LabelNam>
+                                                    <LabelNam htmlFor="">Minimum Bid Increament</LabelNam>
                                                     <TabInput
                                                         type="number"
                                                         placeholder="0.1"
-                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, mintBid: e.target.value })}
+                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, minBidIncreament: e.target.value })}
                                                     />
                                                 </LabelTextDiv>
-                                                <LabelTextDiv>
+                                                {/* <LabelTextDiv>
                                                     <LabelNam htmlFor="">Max</LabelNam>
                                                     <TabInput
                                                         type="number"
                                                         placeholder="0.1"
                                                         onChange={(e) => setAuctionFormData({ ...auctionFormData, max: e.target.value })}
                                                     />
-                                                </LabelTextDiv>
+                                                </LabelTextDiv> */}
                                             </MainRowDate>
                                         </MainRow>
                                         <SaveBtn onClick={handleAuctionFormSubmit}>
