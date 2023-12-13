@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import logo from "../../assets/cards/hominids_mark.png";
 
+import { ethers } from "ethers";
+import { buyListedNft } from "backendConnectors/eraConnector";
+import { useState } from "react";
+import ReactLoading from 'react-loading';
+
+
 const CardContainer = styled.div`
   margin: 120px 10px 0 10px;
   display: flex;
@@ -111,7 +117,7 @@ const UpperText = styled.div`
 `;
 
 const Value = styled.div`
-  color: #af50bd;
+  color: #FF0000;
   text-align: right;
   font-family: Lato;
   font-size: 18px;
@@ -228,179 +234,291 @@ const MintButton = styled.div`
   }
 `;
 
+const getShortenedAddress = (address) => {
+  return `${address?.substring(0, 5)}...${address?.substring(address.length - 3)}`;
+};
+
+const formatTokenAmount = (amount, decimals) => {
+  if (amount === null || amount === undefined || decimals === null || decimals === undefined) {
+    return 'N/A'; // Return a default value or handle the case as needed
+  }
+  return ethers.formatUnits(amount, decimals);
+};
+
 export const NftCard = ({
+  isFor,
+  currentListItem,
   items,
   floorPrice,
   volume,
+  isBuyButton,
   avatar,
+
 }: {
+  isFor: String;
+  currentListItem;
   items: number;
   floorPrice: number;
   volume: number;
+  isBuyButton: boolean;
   avatar: string;
 }) => {
+
+  const [isLoading, setLoading] = useState(false);
+
+  const handleBuyNow = async (id: string, askedFor: string, paymentTokenAddr: string) => {
+
+    console.log(`Buying item with ID: ${id, askedFor, paymentTokenAddr}`);
+
+    const success = await buyListedNft(id, askedFor, paymentTokenAddr, setLoading);
+    if (success) {
+
+      console.log('NFT listed for auction sucessfully!');
+
+    } else {
+      console.error('Failed to aucion NFT!');
+    }
+
+
+  };
+
+  const contentMap = {
+    listNft: {
+      content: (
+        <ContentBox>
+          <Avatar $avatar={avatar}>
+            <Status>
+              {/* <Text>
+              <UpperText>Items</UpperText> <Value>{items}</Value>
+            </Text> */}
+              <Partition>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2"
+                  height="44"
+                  viewBox="0 0 2 44"
+                  fill="none"
+                >
+                  <path
+                    d="M1.25 0L1.25 44"
+                    stroke="url(#paint0_linear_253_537)"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_253_537"
+                      x1="1.75"
+                      y1="-2.18557e-08"
+                      x2="1.75"
+                      y2="44"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0.0001" stopColor="white" stopOpacity="0" />
+                      <stop offset="0.395833" stopColor="#AF50BD" />
+                      <stop offset="0.583333" stopColor="#AF50BD" />
+                      <stop offset="1" stopColor="white" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </Partition>
+              <Text>
+                <UpperText>Asked for</UpperText>
+                <Value>{formatTokenAmount(currentListItem?.[5], 18)} {currentListItem?.[9]}</Value>
+              </Text>
+              <Partition>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2"
+                  height="44"
+                  viewBox="0 0 2 44"
+                  fill="none"
+                >
+                  <path
+                    d="M1.25 0L1.25 44"
+                    stroke="url(#paint0_linear_253_537)"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_253_537"
+                      x1="1.75"
+                      y1="-2.18557e-08"
+                      x2="1.75"
+                      y2="44"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0.0001" stopColor="white" stopOpacity="0" />
+                      <stop offset="0.395833" stopColor="#AF50BD" />
+                      <stop offset="0.583333" stopColor="#AF50BD" />
+                      <stop offset="1" stopColor="white" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </Partition>
+              {/* <Text>
+              <UpperText>Volume traded</UpperText>
+              <Value>{volume}</Value>
+            </Text> */}
+            </Status>
+          </Avatar>
+          <Description>
+            Suigoats is Dynamic collection of 7777&nbsp;NFT and The identity of
+            Sui Network
+          </Description>
+          <FunctionBox>
+            <ButtonBox>
+              <Logo />
+              <TextBox>
+                <CreatedBy>Created by</CreatedBy>
+                <Name>{getShortenedAddress(currentListItem?.[1])}</Name>
+              </TextBox>
+            </ButtonBox>
+            {
+              isBuyButton ? (
+                <MintButton
+                  onClick={() => handleBuyNow(currentListItem?.[0], (currentListItem?.[5]).toString(), currentListItem?.[4])}
+                >
+                  {!currentListItem?.[8] ? "SOLD" : "BUY NOW"}
+                </MintButton>
+              ) : (
+                <MintButton disabled>MINT NOW</MintButton>
+              )
+            }
+
+
+          </FunctionBox>
+        </ContentBox>
+      ),
+      showLoading: isLoading,
+    },
+
+    // Add more cases for different values of isFor here
+    auctionNft: {
+      content: (
+        <ContentBox>
+          <Avatar $avatar={avatar}>
+            <Status>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}></div>
+              <Text>
+                <UpperText>Items</UpperText> <Value>{items}</Value>
+              </Text >
+
+
+              <Partition>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2"
+                  height="44"
+                  viewBox="0 0 2 44"
+                  fill="none"
+                >
+                  <path
+                    d="M1.25 0L1.25 44"
+                    stroke="url(#paint0_linear_253_537)"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_253_537"
+                      x1="1.75"
+                      y1="-2.18557e-08"
+                      x2="1.75"
+                      y2="44"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0.0001" stopColor="white" stopOpacity="0" />
+                      <stop offset="0.395833" stopColor="#AF50BD" />
+                      <stop offset="0.583333" stopColor="#AF50BD" />
+                      <stop offset="1" stopColor="white" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </Partition>
+
+              <Text>
+                <UpperText>Floor price</UpperText>
+                <Value>{floorPrice}</Value>
+              </Text>
+
+              <Partition>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2"
+                  height="44"
+                  viewBox="0 0 2 44"
+                  fill="none"
+                >
+                  <path
+                    d="M1.25 0L1.25 44"
+                    stroke="url(#paint0_linear_253_537)"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_253_537"
+                      x1="1.75"
+                      y1="-2.18557e-08"
+                      x2="1.75"
+                      y2="44"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0.0001" stopColor="white" stopOpacity="0" />
+                      <stop offset="0.395833" stopColor="#AF50BD" />
+                      <stop offset="0.583333" stopColor="#AF50BD" />
+                      <stop offset="1" stopColor="white" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </Partition>
+
+              <Text>
+
+                <UpperText>Volume traded</UpperText>
+                <Value>{volume}</Value>
+              </Text>
+
+
+
+            </Status >
+          </Avatar >
+
+
+          <Description>
+            Suigoats is Dynamic collection of 7777&nbsp;NFT and The identity of
+            Sui Network
+          </Description>
+
+          
+
+          <FunctionBox>
+            <ButtonBox>
+              <Logo />
+              <TextBox>
+                <CreatedBy>Created by</CreatedBy>
+                <Name>Hominids</Name>
+              </TextBox>
+            </ButtonBox>
+            {
+              isBuyButton ? (<MintButton>BUY NOW</MintButton>) : (<MintButton>MINT NOW</MintButton>)
+            }
+
+          </FunctionBox>
+        </ContentBox >
+      ),
+      showLoading: isLoading,
+    },
+  };
+
+  const { content, showLoading } = contentMap[isFor] || { content: null, showLoading: false };
+
+
+
   return (
     <CardContainer>
-      <ContentBox>
-        <Avatar $avatar={avatar}>
-          <Status>
-            <Text>
-              <UpperText>Items</UpperText> <Value>{items}</Value>
-            </Text>
-            <Partition>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2"
-                height="44"
-                viewBox="0 0 2 44"
-                fill="none"
-              >
-                <path
-                  d="M1.25 0L1.25 44"
-                  stroke="url(#paint0_linear_253_537)"
-                />
-                <defs>
-                  <linearGradient
-                    id="paint0_linear_253_537"
-                    x1="1.75"
-                    y1="-2.18557e-08"
-                    x2="1.75"
-                    y2="44"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop offset="0.0001" stopColor="white" stopOpacity="0" />
-                    <stop offset="0.395833" stopColor="#AF50BD" />
-                    <stop offset="0.583333" stopColor="#AF50BD" />
-                    <stop offset="1" stopColor="white" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </Partition>
-            <Text>
-              <UpperText>Floor price</UpperText>
-              <Value>{floorPrice}</Value>
-            </Text>
-            <Partition>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2"
-                height="44"
-                viewBox="0 0 2 44"
-                fill="none"
-              >
-                <path
-                  d="M1.25 0L1.25 44"
-                  stroke="url(#paint0_linear_253_537)"
-                />
-                <defs>
-                  <linearGradient
-                    id="paint0_linear_253_537"
-                    x1="1.75"
-                    y1="-2.18557e-08"
-                    x2="1.75"
-                    y2="44"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop offset="0.0001" stopColor="white" stopOpacity="0" />
-                    <stop offset="0.395833" stopColor="#AF50BD" />
-                    <stop offset="0.583333" stopColor="#AF50BD" />
-                    <stop offset="1" stopColor="white" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </Partition>
-            <Text>
-              <UpperText>Volume traded</UpperText>
-              <Value>{volume}</Value>
-            </Text>
-          </Status>
-          <Status1>
-            <Text>
-              <UpperText>Items</UpperText> <Value>{items}</Value>
-            </Text>
-            <Partition>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2"
-                height="44"
-                viewBox="0 0 2 44"
-                fill="none"
-              >
-                <path
-                  d="M1.25 0L1.25 44"
-                  stroke="url(#paint0_linear_253_537)"
-                />
-                <defs>
-                  <linearGradient
-                    id="paint0_linear_253_537"
-                    x1="1.75"
-                    y1="-2.18557e-08"
-                    x2="1.75"
-                    y2="44"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop offset="0.0001" stopColor="white" stopOpacity="0" />
-                    <stop offset="0.395833" stopColor="#AF50BD" />
-                    <stop offset="0.583333" stopColor="#AF50BD" />
-                    <stop offset="1" stopColor="white" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </Partition>
-            <Text>
-              <UpperText>Floor price</UpperText>
-              <Value>{floorPrice}</Value>
-            </Text>
-            <Partition>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2"
-                height="44"
-                viewBox="0 0 2 44"
-                fill="none"
-              >
-                <path
-                  d="M1.25 0L1.25 44"
-                  stroke="url(#paint0_linear_253_537)"
-                />
-                <defs>
-                  <linearGradient
-                    id="paint0_linear_253_537"
-                    x1="1.75"
-                    y1="-2.18557e-08"
-                    x2="1.75"
-                    y2="44"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop offset="0.0001" stopColor="white" stopOpacity="0" />
-                    <stop offset="0.395833" stopColor="#AF50BD" />
-                    <stop offset="0.583333" stopColor="#AF50BD" />
-                    <stop offset="1" stopColor="white" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </Partition>
-            <Text>
-              <UpperText>Volume traded</UpperText>
-              <Value>{volume}</Value>
-            </Text>
-          </Status1>
-        </Avatar>
-        <Description>
-          Suigoats is Dynamic collection of 7777&nbsp;NFT and The identity of
-          Sui Network
-        </Description>
-        <FunctionBox>
-          <ButtonBox>
-            <Logo />
-            <TextBox>
-              <CreatedBy>Created by</CreatedBy>
-              <Name>Hominids</Name>
-            </TextBox>
-          </ButtonBox>
-          <MintButton>MINT NOW</MintButton>
-        </FunctionBox>
-      </ContentBox>
-    </CardContainer>
+
+      {content}
+      {showLoading && (
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+          <ReactLoading type='spinningBubbles' color='#5D3068' height={175} width={175} />
+        </div>
+      )}
+
+    </CardContainer >
   );
 };

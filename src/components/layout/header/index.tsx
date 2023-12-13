@@ -13,6 +13,7 @@ import frame from "../../../assets/chainicon/frame.png";
 import zeta from "../../../assets/chainicon/zeta.png";
 
 import { ModalContext } from "../../../contexts/ModalProvider";
+import ConnectWallet from "components/modal/ConnectUniversalProfile";
 
 const StyleRightHead = styled.div`
   display: flex;
@@ -83,6 +84,7 @@ const Logo = styled.div<{ $logo: string }>`
   background-size: cover;
   background-repeat: no-repeat;
   margin-right: 30px;
+  cursor: pointer;
 `;
 
 const Button = styled.div`
@@ -185,7 +187,7 @@ const Header = ({ isProfilePage }: { isProfilePage?: boolean }) => {
   const [barVisible, setBarVisible] = useState(true);
   const [visible, setVisible] = useState(true);
   const { width, height } = useWindowSize();
-  const router = useNavigate();
+  const navigate = useNavigate();
 
   //@ts-ignore
   const { isModalVisible, setModalVisible } = useContext(ModalContext);
@@ -211,7 +213,7 @@ const Header = ({ isProfilePage }: { isProfilePage?: boolean }) => {
       {/* <Container> */}
       {barVisible && (
         <BarContainer>
-          <Logo $logo={logo} onClick={() => router('/')} />
+          <Logo $logo={logo} onClick={() => navigate('/')} />
           <Button onClick={onBtnClick}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -233,7 +235,7 @@ const Header = ({ isProfilePage }: { isProfilePage?: boolean }) => {
       {visible && (
         <>
           <StyleChainGroup>
-            {width > 768 && <Logo $logo={logo} />}
+            {width > 768 && <Logo $logo={logo} onClick={() => navigate('/')} />}
             <ImgBox>
               {isProfilePage === true && width > 1200 ? (
                 <Another>
@@ -251,13 +253,14 @@ const Header = ({ isProfilePage }: { isProfilePage?: boolean }) => {
           <StyleMainGroup>
             <Tab />
             {!isUser ? (
-              <GradientButton
-                width={257}
-                height={63}
-                title="CONNECT WALLET"
-                icon="Wallet"
-                headerBtn={true}
-              />
+              // <GradientButton
+              //   width={257}
+              //   height={63}
+              //   title="CONNECT WALLET"
+              //   icon="Wallet"
+              //   headerBtn={true}
+              // />
+              <ConnectWallet />
             ) : (
               <>
                 <StyleButtonGroup>
@@ -310,11 +313,11 @@ const Header = ({ isProfilePage }: { isProfilePage?: boolean }) => {
                 </Profile>
               </>
             )}
-          </StyleMainGroup>
+          </StyleMainGroup >
         </>
       )}
       {/* </Container> */}
-    </StyleRightHead>
+    </StyleRightHead >
   );
 };
 

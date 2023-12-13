@@ -99,7 +99,7 @@ const NFTList = () => {
 
     const handleListFormSubmit = async () => {
         console.log('List NFT Form Data:', listFormData);
-        const success = await listNFT(wallet!, listFormData);
+        const success = await listNFT(wallet!, listFormData, setLoading);
         if (success) {
 
             console.log('NFT listed successfully!');
@@ -111,7 +111,7 @@ const NFTList = () => {
     const handleAuctionFormSubmit = async () => {
         console.log('Auction NFT Form Data:', auctionFormData);
 
-        const success = await auctionNFT(wallet!, auctionFormData);
+        const success = await auctionNFT(wallet!, auctionFormData, setLoading);
         if (success) {
 
             console.log('NFT listed for auction sucessfully!');
@@ -122,7 +122,6 @@ const NFTList = () => {
     }
 
     useEffect(() => {
-        console.log("tab", tab, 'currentbg', bgName)
         if (tab == 0) {
             setBgName('Subtract.png')
         }else if(tab == 1){
@@ -229,72 +228,72 @@ const NFTList = () => {
                                             </CustomFile>
                                             <img src={auctionFormData.image} width={100} alt="" style={{ width: '100%' }} />
                                         </ImageDivCol> */}
-                                        <MainContainer>
-                                            <MainRow>
+                                    <MainContainer>
+                                        <MainRow>
+                                            <LabelTextDiv>
+                                                <LabelNam htmlFor="">NFT Contract Address</LabelNam>
+                                                <TabInput
+                                                    type="text"
+                                                    placeholder="Enter the NFT contract address"
+                                                    onChange={(e) => setAuctionFormData({ ...auctionFormData, nftContractAddress: e.target.value })}
+                                                />
+                                            </LabelTextDiv>
+                                            <LabelTextDiv>
+                                                <LabelNam htmlFor="">Token ID</LabelNam>
+                                                <TabInput
+                                                    type="text"
+                                                    placeholder="Enter the token ID"
+                                                    onChange={(e) => setAuctionFormData({ ...auctionFormData, tokenId: e.target.value })}
+                                                />
+                                            </LabelTextDiv>
+                                        </MainRow>
+                                        <MainRow>
+                                            <LabelTextDiv>
+                                                <LabelNam htmlFor="">Payment Token Address</LabelNam>
+                                                <TabInput
+                                                    type="text"
+                                                    placeholder="Enter the payment token address"
+                                                    onChange={(e) => setAuctionFormData({ ...auctionFormData, paymentTokenAddress: e.target.value })}
+                                                />
+                                            </LabelTextDiv>
+                                            <LabelTextDiv>
+                                                <LabelNam htmlFor="">Minimum bid</LabelNam>
+                                                <TabInput
+                                                    type="text"
+                                                    placeholder="Enter the minimum bid amount"
+                                                    onChange={(e) => setAuctionFormData({ ...auctionFormData, minAmount: e.target.value })}
+                                                />
+                                            </LabelTextDiv>
+                                        </MainRow>
+                                        <MainRow>
+                                            <MainRowDate>
                                                 <LabelTextDiv>
-                                                    <LabelNam htmlFor="">NFT Contract Address</LabelNam>
+                                                    <LabelNam htmlFor="">Start</LabelNam>
                                                     <TabInput
-                                                        type="text"
-                                                        placeholder="Enter the NFT contract address"
-                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, nftContractAddress: e.target.value })}
+                                                        type="date"
+                                                        placeholder="dd/mm/yyyy"
+                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, start: e.target.value })}
                                                     />
                                                 </LabelTextDiv>
                                                 <LabelTextDiv>
-                                                    <LabelNam htmlFor="">Token ID</LabelNam>
+                                                    <LabelNam htmlFor="">End</LabelNam>
                                                     <TabInput
-                                                        type="text"
-                                                        placeholder="Enter the token ID"
-                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, tokenId: e.target.value })}
+                                                        type="date"
+                                                        placeholder="dd/mm/yyyy"
+                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, end: e.target.value })}
                                                     />
                                                 </LabelTextDiv>
-                                            </MainRow>
-                                            <MainRow>
+                                            </MainRowDate>
+                                            <MainRowDate>
                                                 <LabelTextDiv>
-                                                    <LabelNam htmlFor="">Payment Token Address</LabelNam>
+                                                    <LabelNam htmlFor="">Minimum Bid Increament</LabelNam>
                                                     <TabInput
-                                                        type="text"
-                                                        placeholder="Enter the payment token address"
-                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, paymentTokenAddress: e.target.value })}
+                                                        type="number"
+                                                        placeholder="0.1"
+                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, minBidIncreament: e.target.value })}
                                                     />
                                                 </LabelTextDiv>
-                                                <LabelTextDiv>
-                                                    <LabelNam htmlFor="">Minimum bid</LabelNam>
-                                                    <TabInput
-                                                        type="text"
-                                                        placeholder="Enter the minimum bid amount"
-                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, minAmount: e.target.value })}
-                                                    />
-                                                </LabelTextDiv>
-                                            </MainRow>
-                                            <MainRow>
-                                                <MainRowDate>
-                                                    <LabelTextDiv>
-                                                        <LabelNam htmlFor="">Start</LabelNam>
-                                                        <TabInput
-                                                            type="date"
-                                                            placeholder="dd/mm/yyyy"
-                                                            onChange={(e) => setAuctionFormData({ ...auctionFormData, start: e.target.value })}
-                                                        />
-                                                    </LabelTextDiv>
-                                                    <LabelTextDiv>
-                                                        <LabelNam htmlFor="">End</LabelNam>
-                                                        <TabInput
-                                                            type="date"
-                                                            placeholder="dd/mm/yyyy"
-                                                            onChange={(e) => setAuctionFormData({ ...auctionFormData, end: e.target.value })}
-                                                        />
-                                                    </LabelTextDiv>
-                                                </MainRowDate>
-                                                <MainRowDate>
-                                                    <LabelTextDiv>
-                                                        <LabelNam htmlFor="">Minimum Bid Increament</LabelNam>
-                                                        <TabInput
-                                                            type="number"
-                                                            placeholder="0.1"
-                                                            onChange={(e) => setAuctionFormData({ ...auctionFormData, minBidIncreament: e.target.value })}
-                                                        />
-                                                    </LabelTextDiv>
-                                                    {/* <LabelTextDiv>
+                                                {/* <LabelTextDiv>
                                                         <LabelNam htmlFor="">Max</LabelNam>
                                                         <TabInput
                                                             type="number"

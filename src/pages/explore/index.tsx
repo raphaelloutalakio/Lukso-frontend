@@ -8,9 +8,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // import { Pagination, EffectCoverflow } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import { getNftLists, getAuctionedNftLists } from "backendConnectors/eraConnector";
+import { useState, useEffect } from "react";
 
 const AVATARS = [1, 2, 3, 4, 5, 6, 7];
 const Page = styled.div`
+  padding: 0 0;
   margin: auto;
   width: 100%;
 `;
@@ -89,7 +92,35 @@ const StyleBody = styled.div`
 `;
 
 const Explore = () => {
-  
+
+  const [nftLists, setNftLists] = useState([]);
+  const [nftAuctionLists, setNftAuctionLists] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+
+        // nft list data
+        const nftListResult = await getNftLists();
+        if (nftListResult.success) {
+          setNftLists(nftListResult.listings);
+        }
+
+        // auctioned nft data
+        const nftAuctionResult = await getAuctionedNftLists();
+        if (nftAuctionResult.success) {
+          setNftAuctionLists(nftAuctionResult.listings);
+        }
+
+
+      } catch (error) {
+        console.error('Error fetching NFT lists:', error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <Page>
       <StyleBody>
@@ -103,7 +134,7 @@ const Explore = () => {
               <H6 $color="white" $weight={300}>
                 MAIN
               </H6>
-              <img src="/images/icons/Vector4587.svg" style={{borderRadius: '24px'}} alt="" />
+              <img src="/images/icons/Vector4587.svg" style={{ borderRadius: '24px' }} alt="" />
               <H6 $color="white" $weight={300}>
                 EXPLORE
               </H6>
@@ -117,27 +148,32 @@ const Explore = () => {
           <TitleStyle>EXPLORE OUR MARKETPLACE</TitleStyle>
         </Container>
       </FullWidthDiv>
+
+      {/* listed nfts */}
       <Space $height={30} />
       <FullWidthDiv>
         <Container>
           <H6 $color="white" $weight={200} $align="center">
-            Explore Trending Collections
+            Explore Listed NFTs
           </H6>
           <SlideBtn>
-            <ControlButton currInd={3} total={19} />
+            <ControlButton currInd={3} total={3} />
           </SlideBtn>
         </Container>
       </FullWidthDiv>
       <Container>
         <Swiper slidesPerView={"auto"} spaceBetween={36} className="mySwiper">
-          {AVATARS.map((avatar, key) => {
+          {nftLists.length > 0 && nftLists.map((currentListItem, key) => {
             return (
               <SwiperSlide key={key} style={{ flexShrink: "1" }}>
                 <NftCard
-                  key={avatar}
+                  isFor={"listNft"}
+                  currentListItem={currentListItem}
+                  key={key}
                   items={1483}
                   floorPrice={1672}
                   volume={2000}
+                  isBuyButton={true}
                   avatar={nftImg}
                 />
               </SwiperSlide>
@@ -145,6 +181,41 @@ const Explore = () => {
           })}
         </Swiper>
       </Container>
+
+      {/* listed nfts */}
+      <Space $height={30} />
+      <FullWidthDiv>
+        <Container>
+          <H6 $color="white" $weight={200} $align="center">
+            Explore Auctioned NFTs
+          </H6>
+          <SlideBtn>
+            <ControlButton currInd={3} total={3} />
+          </SlideBtn>
+        </Container>
+      </FullWidthDiv>
+      <Container>
+        <Swiper slidesPerView={"auto"} spaceBetween={36} className="mySwiper">
+          {nftAuctionLists.length > 0 && nftAuctionLists.map((currentListItem, key) => {
+            return (
+              <SwiperSlide key={key} style={{ flexShrink: "1" }}>
+                <NftCard
+                  isFor={"auctionNft"}
+                  currentListItem={currentListItem}
+                  key={key}
+                  items={1483}
+                  floorPrice={1672}
+                  volume={2000}
+                  isBuyButton={true}
+                  avatar={nftImg}
+                />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      </Container>
+
+
 
       <Space $height={50} />
       <FullWidthDiv>

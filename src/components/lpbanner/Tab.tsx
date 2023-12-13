@@ -58,7 +58,7 @@ export const Tab = () => {
           TRADE HUB
         </CustomLink>
 
-
+        {/* 
         <CustomLink to="/staking">
 
           STAKING
@@ -69,7 +69,7 @@ export const Tab = () => {
 
           SWAP
 
-        </CustomLink>
+        </CustomLink> */}
 
       </StyleButtonGroup>
     </StyleMain>
