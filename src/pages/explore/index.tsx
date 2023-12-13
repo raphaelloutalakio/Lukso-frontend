@@ -145,7 +145,7 @@ const Explore = () => {
             Explore Listed NFTs
           </H6>
           <SlideBtn>
-            <ControlButton currInd={3} total={19} />
+            <ControlButton currInd={3} total={3} />
           </SlideBtn>
         </Container>
       </FullWidthDiv>
