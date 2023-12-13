@@ -12,6 +12,7 @@ import frame from "../../../assets/chainicon/frame.png";
 import zeta from "../../../assets/chainicon/zeta.png";
 
 import { ModalContext } from "../../../contexts/ModalProvider";
+import ConnectWallet from "components/modal/ConnectUniversalProfile";
 
 const StyleRightHead = styled.div`
   display: flex;
@@ -249,13 +250,14 @@ const Header = ({ isProfilePage }: { isProfilePage?: boolean }) => {
           <StyleMainGroup>
             <Tab />
             {!isUser ? (
-              <GradientButton
-                width={257}
-                height={63}
-                title="CONNECT WALLET"
-                icon="Wallet"
-                headerBtn={true}
-              />
+              // <GradientButton
+              //   width={257}
+              //   height={63}
+              //   title="CONNECT WALLET"
+              //   icon="Wallet"
+              //   headerBtn={true}
+              // />
+              <ConnectWallet />
             ) : (
               <>
                 <StyleButtonGroup>
