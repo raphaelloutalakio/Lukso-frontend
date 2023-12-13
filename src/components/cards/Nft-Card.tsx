@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import logo from "../../assets/cards/hominids_mark.png";
 
+import { ethers } from "ethers";
+
 const CardContainer = styled.div`
   margin: 120px 10px 0 10px;
   display: flex;
@@ -91,7 +93,7 @@ const UpperText = styled.div`
 `;
 
 const Value = styled.div`
-  color: #af50bd;
+  color: #FF0000;
   text-align: right;
   font-family: Lato;
   font-size: 18px;
@@ -208,108 +210,220 @@ const MintButton = styled.div`
   }
 `;
 
+const getShortenedAddress = (address) => {
+  return `${address?.substring(0, 5)}...${address?.substring(address.length - 3)}`;
+};
+
+const formatTokenAmount = (amount, decimals) => {
+  return ethers.formatUnits(amount, decimals);
+};
+
 export const NftCard = ({
+  isFor,
+  currentListItem,
   items,
   floorPrice,
   volume,
+  isBuyButton,
   avatar,
+
 }: {
+  isFor: String;
+  currentListItem;
   items: number;
   floorPrice: number;
   volume: number;
+  isBuyButton: boolean;
   avatar: string;
 }) => {
   return (
     <CardContainer>
-      <ContentBox>
-        <Avatar $avatar={avatar}>
-          <Status>
-            <Text>
-              <UpperText>Items</UpperText> <Value>{items}</Value>
-            </Text>
-            <Partition>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2"
-                height="44"
-                viewBox="0 0 2 44"
-                fill="none"
-              >
-                <path
-                  d="M1.25 0L1.25 44"
-                  stroke="url(#paint0_linear_253_537)"
-                />
-                <defs>
-                  <linearGradient
-                    id="paint0_linear_253_537"
-                    x1="1.75"
-                    y1="-2.18557e-08"
-                    x2="1.75"
-                    y2="44"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop offset="0.0001" stopColor="white" stopOpacity="0" />
-                    <stop offset="0.395833" stopColor="#AF50BD" />
-                    <stop offset="0.583333" stopColor="#AF50BD" />
-                    <stop offset="1" stopColor="white" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </Partition>
-            <Text>
-              <UpperText>Floor price</UpperText>
-              <Value>{floorPrice}</Value>
-            </Text>
-            <Partition>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2"
-                height="44"
-                viewBox="0 0 2 44"
-                fill="none"
-              >
-                <path
-                  d="M1.25 0L1.25 44"
-                  stroke="url(#paint0_linear_253_537)"
-                />
-                <defs>
-                  <linearGradient
-                    id="paint0_linear_253_537"
-                    x1="1.75"
-                    y1="-2.18557e-08"
-                    x2="1.75"
-                    y2="44"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop offset="0.0001" stopColor="white" stopOpacity="0" />
-                    <stop offset="0.395833" stopColor="#AF50BD" />
-                    <stop offset="0.583333" stopColor="#AF50BD" />
-                    <stop offset="1" stopColor="white" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </Partition>
-            <Text>
-              <UpperText>Volume traded</UpperText>
-              <Value>{volume}</Value>
-            </Text>
-          </Status>
-        </Avatar>
-        <Description>
-          Suigoats is Dynamic collection of 7777&nbsp;NFT and The identity of
-          Sui Network
-        </Description>
-        <FunctionBox>
-          <ButtonBox>
-            <Logo />
-            <TextBox>
-              <CreatedBy>Created by</CreatedBy>
-              <Name>Hominids</Name>
-            </TextBox>
-          </ButtonBox>
-          <MintButton>MINT NOW</MintButton>
-        </FunctionBox>
-      </ContentBox>
+      {
+        isFor === "listNft" ? (<ContentBox>
+          <Avatar $avatar={avatar}>
+            <Status>
+              {/* <Text>
+                <UpperText>Items</UpperText> <Value>{items}</Value>
+              </Text> */}
+              <Partition>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2"
+                  height="44"
+                  viewBox="0 0 2 44"
+                  fill="none"
+                >
+                  <path
+                    d="M1.25 0L1.25 44"
+                    stroke="url(#paint0_linear_253_537)"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_253_537"
+                      x1="1.75"
+                      y1="-2.18557e-08"
+                      x2="1.75"
+                      y2="44"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0.0001" stopColor="white" stopOpacity="0" />
+                      <stop offset="0.395833" stopColor="#AF50BD" />
+                      <stop offset="0.583333" stopColor="#AF50BD" />
+                      <stop offset="1" stopColor="white" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </Partition>
+              <Text>
+                <UpperText>Asked for</UpperText>
+                <Value>{formatTokenAmount(currentListItem?.[5], 18)} {currentListItem?.[9]}</Value>
+              </Text>
+              <Partition>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2"
+                  height="44"
+                  viewBox="0 0 2 44"
+                  fill="none"
+                >
+                  <path
+                    d="M1.25 0L1.25 44"
+                    stroke="url(#paint0_linear_253_537)"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_253_537"
+                      x1="1.75"
+                      y1="-2.18557e-08"
+                      x2="1.75"
+                      y2="44"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0.0001" stopColor="white" stopOpacity="0" />
+                      <stop offset="0.395833" stopColor="#AF50BD" />
+                      <stop offset="0.583333" stopColor="#AF50BD" />
+                      <stop offset="1" stopColor="white" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </Partition>
+              {/* <Text>
+                <UpperText>Volume traded</UpperText>
+                <Value>{volume}</Value>
+              </Text> */}
+            </Status>
+          </Avatar>
+          <Description>
+            Suigoats is Dynamic collection of 7777&nbsp;NFT and The identity of
+            Sui Network
+          </Description>
+          <FunctionBox>
+            <ButtonBox>
+              <Logo />
+              <TextBox>
+                <CreatedBy>Created by</CreatedBy>
+                <Name>{getShortenedAddress(currentListItem?.[1])}</Name>
+              </TextBox>
+            </ButtonBox>
+            {
+              isBuyButton ? (<MintButton>BUY NOW</MintButton>) : (<MintButton>MINT NOW</MintButton>)
+            }
+
+          </FunctionBox>
+        </ContentBox>) : (<ContentBox>
+          <Avatar $avatar={avatar}>
+            <Status>
+              <Text>
+                <UpperText>Items</UpperText> <Value>{items}</Value>
+              </Text>
+              <Partition>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2"
+                  height="44"
+                  viewBox="0 0 2 44"
+                  fill="none"
+                >
+                  <path
+                    d="M1.25 0L1.25 44"
+                    stroke="url(#paint0_linear_253_537)"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_253_537"
+                      x1="1.75"
+                      y1="-2.18557e-08"
+                      x2="1.75"
+                      y2="44"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0.0001" stopColor="white" stopOpacity="0" />
+                      <stop offset="0.395833" stopColor="#AF50BD" />
+                      <stop offset="0.583333" stopColor="#AF50BD" />
+                      <stop offset="1" stopColor="white" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </Partition>
+              <Text>
+                <UpperText>Floor price</UpperText>
+                <Value>{floorPrice}</Value>
+              </Text>
+              <Partition>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2"
+                  height="44"
+                  viewBox="0 0 2 44"
+                  fill="none"
+                >
+                  <path
+                    d="M1.25 0L1.25 44"
+                    stroke="url(#paint0_linear_253_537)"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_253_537"
+                      x1="1.75"
+                      y1="-2.18557e-08"
+                      x2="1.75"
+                      y2="44"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0.0001" stopColor="white" stopOpacity="0" />
+                      <stop offset="0.395833" stopColor="#AF50BD" />
+                      <stop offset="0.583333" stopColor="#AF50BD" />
+                      <stop offset="1" stopColor="white" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </Partition>
+              <Text>
+                <UpperText>Volume traded</UpperText>
+                <Value>{volume}</Value>
+              </Text>
+            </Status>
+          </Avatar>
+          <Description>
+            Suigoats is Dynamic collection of 7777&nbsp;NFT and The identity of
+            Sui Network
+          </Description>
+          <FunctionBox>
+            <ButtonBox>
+              <Logo />
+              <TextBox>
+                <CreatedBy>Created by</CreatedBy>
+                <Name>Hominids</Name>
+              </TextBox>
+            </ButtonBox>
+            {
+              isBuyButton ? (<MintButton>BUY NOW</MintButton>) : (<MintButton>MINT NOW</MintButton>)
+            }
+
+          </FunctionBox>
+        </ContentBox>)
+      }
+
     </CardContainer>
   );
 };
