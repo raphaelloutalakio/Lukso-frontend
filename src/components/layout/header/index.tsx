@@ -310,11 +310,11 @@ const Header = ({ isProfilePage }: { isProfilePage?: boolean }) => {
                 </Profile>
               </>
             )}
-          </StyleMainGroup>
+          </StyleMainGroup >
         </>
       )}
       {/* </Container> */}
-    </StyleRightHead>
+    </StyleRightHead >
   );
 };
 

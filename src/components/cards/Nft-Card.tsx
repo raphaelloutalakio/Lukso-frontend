@@ -4,6 +4,8 @@ import logo from "../../assets/cards/hominids_mark.png";
 import { ethers } from "ethers";
 import { buyListedNft } from "backendConnectors/eraConnector";
 import { useState } from "react";
+import ReactLoading from 'react-loading';
+
 
 const CardContainer = styled.div`
   margin: 120px 10px 0 10px;
@@ -454,6 +456,12 @@ export const NftCard = ({
           </FunctionBox>
         </ContentBox>)
       }
+
+      {isLoading && (
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+          <ReactLoading type='spinningBubbles' color='#5D3068' height={175} width={175} />
+        </div>
+      )}
 
     </CardContainer >
   );

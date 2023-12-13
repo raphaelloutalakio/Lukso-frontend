@@ -46,7 +46,7 @@ const ConnectWallet = () => {
 
                 <GradientButton
                     title="Disconnect Profile"
-                    width={270}
+                    width={280}
                     height={63}
                     icon="Wallet"
                     onClick={() => { disconnect({ label: wallet }) }}

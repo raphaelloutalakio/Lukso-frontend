@@ -20,8 +20,8 @@ export const H1 = styled.h1<FontProps>`
     props.$style === "Actay"
       ? "Actay"
       : props.$style === "Black"
-      ? "'Black Han Sans', sans-serif"
-      : ""};
+        ? "'Black Han Sans', sans-serif"
+        : ""};
   text-align: ${(props) => props.$align};
 `;
 
@@ -34,8 +34,8 @@ export const H2 = styled.h2<FontProps>`
     props.$style === "Actay"
       ? "Actay"
       : props.$style === "Black"
-      ? "'Black Han Sans', sans-serif"
-      : ""};
+        ? "'Black Han Sans', sans-serif"
+        : ""};
   text-align: ${(props) => props.$align};
 `;
 
@@ -48,8 +48,8 @@ export const H3 = styled.h3<FontProps>`
     props.$style === "Actay"
       ? "Actay"
       : props.$style === "Black"
-      ? "'Black Han Sans', sans-serif"
-      : ""};
+        ? "'Black Han Sans', sans-serif"
+        : ""};
   text-align: ${(props) => props.$align};
 `;
 
@@ -62,8 +62,8 @@ export const H4 = styled.h2<FontProps>`
     props.$style === "Actay"
       ? "Actay"
       : props.$style === "Black"
-      ? "'Black Han Sans', sans-serif"
-      : ""};
+        ? "'Black Han Sans', sans-serif"
+        : ""};
   text-align: ${(props) => props.$align};
    @media (max-width: 768px) {
     font-size: 18px;
@@ -79,8 +79,8 @@ export const H5 = styled.h5<FontProps>`
     props.$style === "Actay"
       ? "Actay"
       : props.$style === "Black"
-      ? "'Black Han Sans', sans-serif"
-      : ""};
+        ? "'Black Han Sans', sans-serif"
+        : ""};
   text-align: ${(props) => props.$align};
 `;
 
@@ -93,8 +93,8 @@ export const LH6 = styled.h6<FontProps>`
     props.$style === "Actay"
       ? "Actay"
       : props.$style === "Black"
-      ? "'Black Han Sans', sans-serif"
-      : ""};
+        ? "'Black Han Sans', sans-serif"
+        : ""};
   text-align: ${(props) => props.$align};
 `;
 
