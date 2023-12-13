@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // import { Pagination, EffectCoverflow } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import { getNftLists } from "backendConnectors/eraConnector";
+import { getNftLists, getAuctionedNftLists } from "backendConnectors/eraConnector";
 import { useState, useEffect } from "react";
 
 const AVATARS = [1, 2, 3, 4, 5, 6, 7];
@@ -94,14 +94,24 @@ const StyleBody = styled.div`
 const Explore = () => {
 
   const [nftLists, setNftLists] = useState([]);
+  const [nftAuctionLists, setNftAuctionLists] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const result = await getNftLists();
-        if (result.success) {
-          setNftLists(result.listings);
+
+        // nft list data
+        const nftListResult = await getNftLists();
+        if (nftListResult.success) {
+          setNftLists(nftListResult.listings);
         }
+
+        // auctioned nft data
+        const nftAuctionResult = await getAuctionedNftLists();
+        if (nftAuctionResult.success) {
+          setNftAuctionLists(nftAuctionResult.listings);
+        }
+
 
       } catch (error) {
         console.error('Error fetching NFT lists:', error);
@@ -138,6 +148,8 @@ const Explore = () => {
           <TitleStyle>EXPLORE OUR MARKETPLACE</TitleStyle>
         </Container>
       </FullWidthDiv>
+
+      {/* listed nfts */}
       <Space $height={30} />
       <FullWidthDiv>
         <Container>
@@ -169,6 +181,41 @@ const Explore = () => {
           })}
         </Swiper>
       </Container>
+
+      {/* listed nfts */}
+      <Space $height={30} />
+      <FullWidthDiv>
+        <Container>
+          <H6 $color="white" $weight={200} $align="center">
+            Explore Auctioned NFTs
+          </H6>
+          <SlideBtn>
+            <ControlButton currInd={3} total={3} />
+          </SlideBtn>
+        </Container>
+      </FullWidthDiv>
+      <Container>
+        <Swiper slidesPerView={"auto"} spaceBetween={36} className="mySwiper">
+          {nftAuctionLists.length > 0 && nftAuctionLists.map((currentListItem, key) => {
+            return (
+              <SwiperSlide key={key} style={{ flexShrink: "1" }}>
+                <NftCard
+                  isFor={"auctionNft"}
+                  currentListItem={currentListItem}
+                  key={key}
+                  items={1483}
+                  floorPrice={1672}
+                  volume={2000}
+                  isBuyButton={true}
+                  avatar={nftImg}
+                />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      </Container>
+
+
 
       <Space $height={50} />
       <FullWidthDiv>

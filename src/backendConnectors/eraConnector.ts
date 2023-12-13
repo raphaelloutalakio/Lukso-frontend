@@ -154,7 +154,49 @@ export const getNftLists = async (): Promise<any> => {
             listings: getAllLists,
         };
     } catch (error) {
-        setLoading(false);
+
+        return {
+            success: false,
+            msg: error.message,
+        };
+    }
+};
+
+
+export const getAuctionedNftLists = async (): Promise<any> => {
+    try {
+        const provider = new ethers.JsonRpcProvider('https://rpc.testnet.lukso.network');
+
+        let getAllLists: any[] = [];
+        const contract = ERA__factory.connect(eraContractAddr, provider);
+
+        const tx = await contract.marketplace();
+
+        if (Number(tx[5])) {
+            let list_length = Number(tx[3]);
+            for (let i = 0; i < list_length; i++) {
+                let a = await contract.auctions(i);
+                // Convert non-boolean items to string
+                const stringifiedItem = a.map((item: any) => (typeof item !== 'boolean' ? item.toString() : item));
+
+                const tokenAddress = stringifiedItem[3];
+                const tokenContract = MyToken__factory.connect(tokenAddress, provider);
+
+                let tokenSymbol = await tokenContract.getData("0x2f0a68ab07768e01943a599e73362a0e17a63a72e94dd2e384d2c1d4db932756")
+                tokenSymbol = bytesToString(tokenSymbol);
+                console.log("symbl  ", tokenSymbol);
+                stringifiedItem.push(tokenSymbol);
+                getAllLists = [...getAllLists, stringifiedItem];
+            }
+        }
+
+        console.log('getAllauctionedList : ', { getAllLists });
+
+        return {
+            success: true,
+            listings: getAllLists,
+        };
+    } catch (error) {
         return {
             success: false,
             msg: error.message,

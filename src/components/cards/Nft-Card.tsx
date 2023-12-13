@@ -219,6 +219,9 @@ const getShortenedAddress = (address) => {
 };
 
 const formatTokenAmount = (amount, decimals) => {
+  if (amount === null || amount === undefined || decimals === null || decimals === undefined) {
+    return 'N/A'; // Return a default value or handle the case as needed
+  }
   return ethers.formatUnits(amount, decimals);
 };
 
@@ -259,16 +262,15 @@ export const NftCard = ({
 
   };
 
-
-  return (
-    <CardContainer>
-      {
-        isFor === "listNft" ? (<ContentBox>
+  const contentMap = {
+    listNft: {
+      content: (
+        <ContentBox>
           <Avatar $avatar={avatar}>
             <Status>
               {/* <Text>
-                <UpperText>Items</UpperText> <Value>{items}</Value>
-              </Text> */}
+              <UpperText>Items</UpperText> <Value>{items}</Value>
+            </Text> */}
               <Partition>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -332,9 +334,9 @@ export const NftCard = ({
                 </svg>
               </Partition>
               {/* <Text>
-                <UpperText>Volume traded</UpperText>
-                <Value>{volume}</Value>
-              </Text> */}
+              <UpperText>Volume traded</UpperText>
+              <Value>{volume}</Value>
+            </Text> */}
             </Status>
           </Avatar>
           <Description>
@@ -363,12 +365,23 @@ export const NftCard = ({
 
 
           </FunctionBox>
-        </ContentBox>) : (<ContentBox>
+        </ContentBox>
+      ),
+      showLoading: isLoading,
+    },
+
+    // Add more cases for different values of isFor here
+    auctionNft: {
+      content: (
+        <ContentBox>
           <Avatar $avatar={avatar}>
             <Status>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}></div>
               <Text>
                 <UpperText>Items</UpperText> <Value>{items}</Value>
-              </Text>
+              </Text >
+
+
               <Partition>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -398,10 +411,12 @@ export const NftCard = ({
                   </defs>
                 </svg>
               </Partition>
+
               <Text>
                 <UpperText>Floor price</UpperText>
                 <Value>{floorPrice}</Value>
               </Text>
+
               <Partition>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -431,16 +446,26 @@ export const NftCard = ({
                   </defs>
                 </svg>
               </Partition>
+
               <Text>
+
                 <UpperText>Volume traded</UpperText>
                 <Value>{volume}</Value>
               </Text>
-            </Status>
-          </Avatar>
+
+
+
+            </Status >
+          </Avatar >
+
+
           <Description>
             Suigoats is Dynamic collection of 7777&nbsp;NFT and The identity of
             Sui Network
           </Description>
+
+          
+
           <FunctionBox>
             <ButtonBox>
               <Logo />
@@ -454,10 +479,21 @@ export const NftCard = ({
             }
 
           </FunctionBox>
-        </ContentBox>)
-      }
+        </ContentBox >
+      ),
+      showLoading: isLoading,
+    },
+  };
 
-      {isLoading && (
+  const { content, showLoading } = contentMap[isFor] || { content: null, showLoading: false };
+
+
+
+  return (
+    <CardContainer>
+
+      {content}
+      {showLoading && (
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
           <ReactLoading type='spinningBubbles' color='#5D3068' height={175} width={175} />
         </div>
