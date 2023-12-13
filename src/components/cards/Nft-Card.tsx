@@ -2,6 +2,8 @@ import styled from "styled-components";
 import logo from "../../assets/cards/hominids_mark.png";
 
 import { ethers } from "ethers";
+import { buyListedNft } from "backendConnectors/eraConnector";
+import { useState } from "react";
 
 const CardContainer = styled.div`
   margin: 120px 10px 0 10px;
@@ -236,6 +238,26 @@ export const NftCard = ({
   isBuyButton: boolean;
   avatar: string;
 }) => {
+
+  const [isLoading, setLoading] = useState(false);
+
+  const handleBuyNow = async (id: string, askedFor: string, paymentTokenAddr: string) => {
+
+    console.log(`Buying item with ID: ${id, askedFor, paymentTokenAddr}`);
+
+    const success = await buyListedNft(id, askedFor, paymentTokenAddr, setLoading);
+    if (success) {
+
+      console.log('NFT listed for auction sucessfully!');
+
+    } else {
+      console.error('Failed to aucion NFT!');
+    }
+
+
+  };
+
+
   return (
     <CardContainer>
       {
@@ -326,8 +348,17 @@ export const NftCard = ({
               </TextBox>
             </ButtonBox>
             {
-              isBuyButton ? (<MintButton>BUY NOW</MintButton>) : (<MintButton>MINT NOW</MintButton>)
+              isBuyButton ? (
+                <MintButton
+                  onClick={() => handleBuyNow(currentListItem?.[0], (currentListItem?.[5]).toString(), currentListItem?.[4])}
+                >
+                  {!currentListItem?.[8] ? "SOLD" : "BUY NOW"}
+                </MintButton>
+              ) : (
+                <MintButton disabled>MINT NOW</MintButton>
+              )
             }
+
 
           </FunctionBox>
         </ContentBox>) : (<ContentBox>
@@ -424,6 +455,6 @@ export const NftCard = ({
         </ContentBox>)
       }
 
-    </CardContainer>
+    </CardContainer >
   );
 };

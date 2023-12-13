@@ -67,6 +67,7 @@ export async function listNFT(wallet: WalletState, formData: NFTListingData, set
         // await txn.wait();
         // return true;
     } catch (error) {
+        setLoading(false);
         console.error('Error listing NFT:', error);
         return false;
     }
@@ -106,45 +107,12 @@ export async function auctionNFT(wallet: WalletState, formData: AUCTIONData, set
         ); setLoading(false);
         return true;
     } catch (error) {
+        setLoading(false);
         console.error('Error listing NFT:', error);
         return false;
     }
 }
 
-// export const getNftLists = async (): Promise<any> => {
-//     try {
-//         const provider = new ethers.JsonRpcProvider('https://rpc.testnet.lukso.network');
-
-//         let getAllLists: any[] = [];
-//         const contract = ERA__factory.connect(eraContractAddr, provider);
-
-//         const tx = await contract.marketplace();
-
-//         if (Number(tx[3])) {
-//             let list_length = Number(tx[3]);
-//             for (let i = 0; i < list_length; i++) {
-//                 let a = await contract.lists(i);
-//                 // Convert non-boolean items to string
-//                 const stringifiedItem = a.map((item: any) => (typeof item !== 'boolean' ? item.toString() : item));
-//                 getAllLists = [...getAllLists, stringifiedItem];
-//             }
-//         }
-
-//         console.log('getAllLists : ', { getAllLists });
-
-//         return {
-//             success: true,
-//             listings: getAllLists,
-//         };
-//     } catch (error) {
-
-
-//         return {
-//             success: false,
-//             msg: error.message,
-//         };
-//     }
-// };
 
 function bytesToString(bytes) {
     return ethers.toUtf8String(bytes);
@@ -186,10 +154,49 @@ export const getNftLists = async (): Promise<any> => {
             listings: getAllLists,
         };
     } catch (error) {
+        setLoading(false);
         return {
             success: false,
             msg: error.message,
         };
     }
 };
+
+export async function buyListedNft(id: string, amount: string, paymentTokenAddr: string, setLoading): Promise<boolean> {
+    try {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+
+        console.log("singer: ", signer);
+
+        const era = ERA__factory.connect(eraContractAddr, signer);
+        const tokenContract = MyToken__factory.connect(paymentTokenAddr, signer);
+
+        console.log("token : ", tokenContract);
+        setLoading(true);
+        await tokenContract.authorizeOperator(eraContractAddr,
+            "8888888000000000000000000",
+            "0x",
+            { gasLimit: 200000 }
+        );
+        setLoading(false);
+
+        setLoading(true);
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+        setLoading(false);
+
+        setLoading(true);
+        await era.buy(
+            id,
+            { gasLimit: 200000 }
+        );
+        setLoading(false);
+        return true;
+    } catch (error) {
+        setLoading(false);
+        console.error('Error buying nft:', error);
+        return false;
+    }
+}
+
 
