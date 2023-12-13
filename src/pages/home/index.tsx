@@ -700,7 +700,7 @@ export default function Home() {
       <AboutUsBox>
         <AboutUs />
       </AboutUsBox>
-      <AboutContainer>
+      {/* <AboutContainer>
         <CollectionTextBox>
           <Heading $color="white" $weight={400} $style={"Black"}>
             TOP COLLECTIONS
@@ -746,8 +746,8 @@ export default function Home() {
             </LongTabButton>
           </Button2Box>
         </CollectionTextBox>
-      </AboutContainer>
-      <NftBox>
+      </AboutContainer> */}
+      {/* <NftBox>
         <NftContainer>
           <Swiper slidesPerView={"auto"} spaceBetween={36} className="mySwiper">
             {NFTS.map((nft, index) => (
@@ -763,7 +763,7 @@ export default function Home() {
             ))}
           </Swiper>
         </NftContainer>
-      </NftBox>
+      </NftBox> */}
       <SellerContainer>
         <SellerBox>
           <Heading
@@ -864,7 +864,7 @@ export default function Home() {
       <H4WithMargin $color="white" $weight={500} $align="center">
         We will gladly consider your cooperation proposals
       </H4WithMargin>
-      
+
       <FullDivBox>
         <InputContainer>
           {/* <Bg /> */}
@@ -887,7 +887,7 @@ export default function Home() {
           </FullBox>
           <FullDivBox>
             <H4WithWidth>
-              By clicking the button, I consent 
+              By clicking the button, I consent
               <br />to the processing of personal data
             </H4WithWidth>
           </FullDivBox>

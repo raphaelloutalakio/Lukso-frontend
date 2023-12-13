@@ -65,7 +65,7 @@ export async function listNFT(wallet: WalletState, formData: NFTListingData, set
         const txn = await era.list(formData.nftContractAddress, formData.tokenId, formData.paymentTokenAddress, amountInEther.toString());
         setLoading(false);
         // await txn.wait();
-        // return true;
+        return true;
     } catch (error) {
         setLoading(false);
         console.error('Error listing NFT:', error);
@@ -83,7 +83,8 @@ export async function auctionNFT(wallet: WalletState, formData: AUCTIONData, set
 
 
         /// data
-        const startTime = Math.floor(new Date(formData?.start).getTime() / 1000);
+        const currentTime = Math.floor(Date.now() / 1000);
+        const startTime = currentTime + 69;
         const expirationTime = Math.floor(new Date(formData?.end).getTime() / 1000);
         const min = convertAmountToEther(formData.minBidIncreament);
         const amount = convertAmountToEther(formData.minAmount);
@@ -147,7 +148,7 @@ export const getNftLists = async (): Promise<any> => {
             }
         }
 
-        console.log('getAllLists : ', { getAllLists });
+        // console.log('getAllLists : ', { getAllLists });
 
         return {
             success: true,
@@ -240,5 +241,43 @@ export async function buyListedNft(id: string, amount: string, paymentTokenAddr:
         return false;
     }
 }
+
+export async function placeBid(id: string, amount: string, paymentTokenAddr: string, setLoading): Promise<boolean> {
+    try {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+
+        console.log("singer: ", signer);
+
+        const era = ERA__factory.connect(eraContractAddr, signer);
+        const tokenContract = MyToken__factory.connect(paymentTokenAddr, signer);
+
+        console.log("token : ", tokenContract);
+        setLoading(true);
+        await tokenContract.authorizeOperator(eraContractAddr,
+            "8888888000000000000000000",
+            "0x",
+            { gasLimit: 200000 }
+        );
+        setLoading(false);
+
+        setLoading(true);
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+        setLoading(false);
+
+        setLoading(true);
+        await era.placeBid(
+            id, "180000000000000000000",
+            { gasLimit: 200000 }
+        );
+        setLoading(false);
+        return true;
+    } catch (error) {
+        setLoading(false);
+        console.error('Error buying nft:', error);
+        return false;
+    }
+}
+
 
 

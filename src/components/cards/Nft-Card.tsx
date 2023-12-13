@@ -2,8 +2,8 @@ import styled from "styled-components";
 import logo from "../../assets/cards/hominids_mark.png";
 
 import { ethers } from "ethers";
-import { buyListedNft } from "backendConnectors/eraConnector";
-import { useState } from "react";
+import { buyListedNft, placeBid } from "backendConnectors/eraConnector";
+import { useState, useEffect } from "react";
 import ReactLoading from 'react-loading';
 
 
@@ -265,8 +265,35 @@ export const NftCard = ({
 }) => {
 
   const [isLoading, setLoading] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(0);
 
-  const handleBuyNow = async (id: string, askedFor: string, paymentTokenAddr: string) => {
+
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const currentTime = Math.floor(Date.now() / 1000);
+      const remainingTime = Number(currentListItem?.[7]) - currentTime;
+
+      if (remainingTime <= 0) {
+        clearInterval(timer);
+        setTimeLeft(0);
+      } else {
+        setTimeLeft(remainingTime);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const formatTime = (seconds: number): string => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  };
+
+  const handleBuyNow = async (id: string, askedFor: string, paymentTokenAddr: string,) => {
 
     console.log(`Buying item with ID: ${id, askedFor, paymentTokenAddr}`);
 
@@ -281,6 +308,21 @@ export const NftCard = ({
 
 
   };
+
+  const handleBidNow = async (id: string, amount: string, paymentTokenAddr: string) => {
+    console.log("biding now : ", id, paymentTokenAddr, amount);
+
+
+    const success = await placeBid(id, amount, paymentTokenAddr, setLoading);
+    if (success) {
+
+      console.log('Bid succesfully!');
+
+    } else {
+      console.error('Bid failed');
+    }
+
+  }
 
   const contentMap = {
     listNft: {
@@ -398,7 +440,7 @@ export const NftCard = ({
             <Status>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}></div>
               <Text>
-                <UpperText>Items</UpperText> <Value>{items}</Value>
+                <UpperText>Pay token</UpperText> <Value>{getShortenedAddress(currentListItem?.[3])}</Value>
               </Text >
 
 
@@ -433,8 +475,8 @@ export const NftCard = ({
               </Partition>
 
               <Text>
-                <UpperText>Floor price</UpperText>
-                <Value>{floorPrice}</Value>
+                <UpperText>High. bid</UpperText>
+                <Value>{formatTokenAmount(currentListItem?.[11], 18)}</Value>
               </Text>
 
               <Partition>
@@ -468,9 +510,8 @@ export const NftCard = ({
               </Partition>
 
               <Text>
-
-                <UpperText>Volume traded</UpperText>
-                <Value>{volume}</Value>
+                <UpperText>Time Left</UpperText>
+                <Value>{formatTime(timeLeft)}</Value>
               </Text>
 
 
@@ -479,7 +520,7 @@ export const NftCard = ({
             <Status1>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}></div>
               <Text>
-                <UpperText>Items</UpperText> <Value>{items}</Value>
+                <UpperText>High. bidder</UpperText> <Value>{getShortenedAddress(currentListItem?.[10])}</Value>
               </Text >
 
 
@@ -514,8 +555,8 @@ export const NftCard = ({
               </Partition>
 
               <Text>
-                <UpperText>Floor price</UpperText>
-                <Value>{floorPrice}</Value>
+                <UpperText>Min. Bid</UpperText>
+                <Value>{formatTokenAmount(currentListItem?.[4], 18)}</Value>
               </Text>
 
               <Partition>
@@ -550,8 +591,8 @@ export const NftCard = ({
 
               <Text>
 
-                <UpperText>Volume traded</UpperText>
-                <Value>{volume}</Value>
+                <UpperText>Min. Bid incr.</UpperText>
+                <Value>{formatTokenAmount(currentListItem?.[5], 18)}</Value>
               </Text>
 
 
@@ -565,18 +606,30 @@ export const NftCard = ({
             Sui Network
           </Description>
 
-          
+
 
           <FunctionBox>
             <ButtonBox>
               <Logo />
               <TextBox>
                 <CreatedBy>Created by</CreatedBy>
-                <Name>Hominids</Name>
+                <Name>{getShortenedAddress(currentListItem?.[9])}</Name>
               </TextBox>
             </ButtonBox>
+            {/* {
+              isBuyButton ? (<MintButton>Bid Now</MintButton>) : (<MintButton>MINT NOW</MintButton>)
+            } */}
+
             {
-              isBuyButton ? (<MintButton>BUY NOW</MintButton>) : (<MintButton>MINT NOW</MintButton>)
+              isBuyButton ? (
+                <MintButton
+                  onClick={() => handleBidNow(currentListItem?.[0], currentListItem?.[4], currentListItem?.[3], setLoading)}
+                >
+                  {!currentListItem?.[12] ? "SOLD" : "BID NOW"}
+                </MintButton>
+              ) : (
+                <MintButton disabled>MINT NOW</MintButton>
+              )
             }
 
           </FunctionBox>
