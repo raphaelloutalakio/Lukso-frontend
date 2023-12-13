@@ -66,7 +66,7 @@ export const MainTab1 = styled.div`
 `
 export const MainTab2 = styled.div`
     width: 100%;
-    background-image: url('/images/bg/Subtract(1).png');
+    background-image: url('/images/bg/Subtract1.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     padding: 0 24px;
@@ -77,7 +77,7 @@ export const MainTab2 = styled.div`
 `
 export const MainTab3 = styled.div`
     width: 100%;
-    background-image: url('/images/bg/Subtract(2).png');
+    background-image: url('/images/bg/Subtract2.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     padding: 0 24px;

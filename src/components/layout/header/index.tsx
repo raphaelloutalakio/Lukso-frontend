@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { useWindowSize } from "hooks/useWindowSizes";
@@ -184,6 +185,7 @@ const Header = ({ isProfilePage }: { isProfilePage?: boolean }) => {
   const [barVisible, setBarVisible] = useState(true);
   const [visible, setVisible] = useState(true);
   const { width, height } = useWindowSize();
+  const router = useNavigate();
 
   //@ts-ignore
   const { isModalVisible, setModalVisible } = useContext(ModalContext);
@@ -209,7 +211,7 @@ const Header = ({ isProfilePage }: { isProfilePage?: boolean }) => {
       {/* <Container> */}
       {barVisible && (
         <BarContainer>
-          <Logo $logo={logo} />
+          <Logo $logo={logo} onClick={() => router('/')} />
           <Button onClick={onBtnClick}>
             <svg
               xmlns="http://www.w3.org/2000/svg"

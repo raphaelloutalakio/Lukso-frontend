@@ -74,6 +74,26 @@ const Status = styled.div`
   } */
 `;
 
+const Status1 = styled.div`
+  width: 400px;
+  height: 92px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-shrink: 0;
+  border-radius: 20px 20px 0px 0px;
+  background: rgba(17, 16, 18, 0.6);
+  backdrop-filter: blur(4px);
+  position: absolute;
+  bottom: 0;
+  transform: translate(0, -100%);
+  /* @media (max-width: 560px) {
+    width: 265px;
+    height: 60px;
+    margin-left: 0;
+  } */
+`;
+
 const Text = styled.div`
   display: flex;
   flex-direction: column;
@@ -294,6 +314,77 @@ export const NftCard = ({
               <Value>{volume}</Value>
             </Text>
           </Status>
+          <Status1>
+            <Text>
+              <UpperText>Items</UpperText> <Value>{items}</Value>
+            </Text>
+            <Partition>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="2"
+                height="44"
+                viewBox="0 0 2 44"
+                fill="none"
+              >
+                <path
+                  d="M1.25 0L1.25 44"
+                  stroke="url(#paint0_linear_253_537)"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_253_537"
+                    x1="1.75"
+                    y1="-2.18557e-08"
+                    x2="1.75"
+                    y2="44"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0.0001" stopColor="white" stopOpacity="0" />
+                    <stop offset="0.395833" stopColor="#AF50BD" />
+                    <stop offset="0.583333" stopColor="#AF50BD" />
+                    <stop offset="1" stopColor="white" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </Partition>
+            <Text>
+              <UpperText>Floor price</UpperText>
+              <Value>{floorPrice}</Value>
+            </Text>
+            <Partition>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="2"
+                height="44"
+                viewBox="0 0 2 44"
+                fill="none"
+              >
+                <path
+                  d="M1.25 0L1.25 44"
+                  stroke="url(#paint0_linear_253_537)"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_253_537"
+                    x1="1.75"
+                    y1="-2.18557e-08"
+                    x2="1.75"
+                    y2="44"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset="0.0001" stopColor="white" stopOpacity="0" />
+                    <stop offset="0.395833" stopColor="#AF50BD" />
+                    <stop offset="0.583333" stopColor="#AF50BD" />
+                    <stop offset="1" stopColor="white" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </Partition>
+            <Text>
+              <UpperText>Volume traded</UpperText>
+              <Value>{volume}</Value>
+            </Text>
+          </Status1>
         </Avatar>
         <Description>
           Suigoats is Dynamic collection of 7777&nbsp;NFT and The identity of

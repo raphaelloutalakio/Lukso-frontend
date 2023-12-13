@@ -34,7 +34,8 @@ import { useConnectWallet } from "@web3-onboard/react";
 
 const NFTList = () => {
     const [{ wallet }] = useConnectWallet()
-    const [tab, setTab] = useState(true);
+    const [tab, setTab] = useState(0);
+    const [bgName, setBgName] = useState('Subtract.png')
     const [listFormData, setListFormData] = useState({
         imageFile: Img,
         nftContractAddress: "",
@@ -120,6 +121,17 @@ const NFTList = () => {
         }
     }
 
+    useEffect(() => {
+        console.log("tab", tab, 'currentbg', bgName)
+        if (tab == 0) {
+            setBgName('Subtract.png')
+        }else if(tab == 1){
+            setBgName('Subtract1.png')
+        }else {
+            setBgName('Subtract2.png')
+        }
+    }, [tab])
+
     if (isLoading) {
         return (
             <div style={{display:'flex', justifyContent:'center', alignItems:'center', height: '100vh'}}>
@@ -131,17 +143,20 @@ const NFTList = () => {
             <StyleBody>
                 <Header />
                 <PageBody>
-                    <MainTab1 $bg={tab ? 'left' : 'right'}>
+                    <MainTab1 $bg={bgName}>
                         <TabHeader>
-                            <HeaderChildActive onClick={() => setTab(true)}>
+                            <HeaderChildActive onClick={() => setTab(0)}>
                                 List NFT
                             </HeaderChildActive>
-                            <HeaderChild onClick={() => setTab(false)}>
+                            <HeaderChild onClick={() => setTab(1)}>
                                 Auction NFT
+                            </HeaderChild>
+                            <HeaderChild onClick={() => setTab(2)}>
+                                Meanting
                             </HeaderChild>
                         </TabHeader>
                         {
-                            tab ? (
+                            tab == 0 &&(
                                 <TabBody>
                                     <TDStar src='/images/icons/star.svg' />
                                     <MainDiv>
@@ -198,9 +213,11 @@ const NFTList = () => {
                                         </MainContainer>
                                     </MainDiv>
                                 </TabBody>
-                            ) : (
+                            )
+                        }
+                        {
+                            tab == 1 && (
                                 <TabBody>
-                                    <TDStar src='/images/icons/star.svg' />
                                     <MainDiv>
                                         {/* <ImageDivCol>
                                             <CustomFile>
@@ -293,7 +310,104 @@ const NFTList = () => {
                                         </MainContainer>
                                     </MainDiv>
                                 </TabBody>
-                            )
+                                )
+                        }
+                        {
+                            tab == 2 && (
+                                <TabBody>
+                                    <MainDiv>
+                                        {/* <ImageDivCol>
+                                            <CustomFile>
+                                                Image Upload
+                                                <input
+                                                    type="file"
+                                                    onChange={(e) => handleImageUpload(e, 'auction')}
+                                                />
+                                            </CustomFile>
+                                            <img src={auctionFormData.image} width={100} alt="" style={{ width: '100%' }} />
+                                        </ImageDivCol> */}
+                                        <MainContainer>
+                                            <MainRow>
+                                                <LabelTextDiv>
+                                                    <LabelNam htmlFor="">NFT Contract Address</LabelNam>
+                                                    <TabInput
+                                                        type="text"
+                                                        placeholder="Enter the NFT contract address"
+                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, nftContractAddress: e.target.value })}
+                                                    />
+                                                </LabelTextDiv>
+                                                <LabelTextDiv>
+                                                    <LabelNam htmlFor="">Token ID</LabelNam>
+                                                    <TabInput
+                                                        type="text"
+                                                        placeholder="Enter the token ID"
+                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, tokenId: e.target.value })}
+                                                    />
+                                                </LabelTextDiv>
+                                            </MainRow>
+                                            <MainRow>
+                                                <LabelTextDiv>
+                                                    <LabelNam htmlFor="">Payment Token Address</LabelNam>
+                                                    <TabInput
+                                                        type="text"
+                                                        placeholder="Enter the payment token address"
+                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, paymentTokenAddress: e.target.value })}
+                                                    />
+                                                </LabelTextDiv>
+                                                <LabelTextDiv>
+                                                    <LabelNam htmlFor="">Minimum bid</LabelNam>
+                                                    <TabInput
+                                                        type="text"
+                                                        placeholder="Enter the minimum bid amount"
+                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, minAmount: e.target.value })}
+                                                    />
+                                                </LabelTextDiv>
+                                            </MainRow>
+                                            <MainRow>
+                                                <MainRowDate>
+                                                    <LabelTextDiv>
+                                                        <LabelNam htmlFor="">Start</LabelNam>
+                                                        <TabInput
+                                                            type="date"
+                                                            placeholder="dd/mm/yyyy"
+                                                            onChange={(e) => setAuctionFormData({ ...auctionFormData, start: e.target.value })}
+                                                        />
+                                                    </LabelTextDiv>
+                                                    <LabelTextDiv>
+                                                        <LabelNam htmlFor="">End</LabelNam>
+                                                        <TabInput
+                                                            type="date"
+                                                            placeholder="dd/mm/yyyy"
+                                                            onChange={(e) => setAuctionFormData({ ...auctionFormData, end: e.target.value })}
+                                                        />
+                                                    </LabelTextDiv>
+                                                </MainRowDate>
+                                                <MainRowDate>
+                                                    <LabelTextDiv>
+                                                        <LabelNam htmlFor="">Minimum Bid Increament</LabelNam>
+                                                        <TabInput
+                                                            type="number"
+                                                            placeholder="0.1"
+                                                            onChange={(e) => setAuctionFormData({ ...auctionFormData, minBidIncreament: e.target.value })}
+                                                        />
+                                                    </LabelTextDiv>
+                                                    {/* <LabelTextDiv>
+                                                        <LabelNam htmlFor="">Max</LabelNam>
+                                                        <TabInput
+                                                            type="number"
+                                                            placeholder="0.1"
+                                                            onChange={(e) => setAuctionFormData({ ...auctionFormData, max: e.target.value })}
+                                                        />
+                                                    </LabelTextDiv> */}
+                                                </MainRowDate>
+                                            </MainRow>
+                                            <SaveBtn onClick={handleAuctionFormSubmit}>
+                                                Submit
+                                            </SaveBtn>
+                                        </MainContainer>
+                                    </MainDiv>
+                                </TabBody>
+                                )
                         }
                     </MainTab1>
                 </PageBody>

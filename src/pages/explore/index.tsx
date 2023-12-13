@@ -11,7 +11,6 @@ import "swiper/css/pagination";
 
 const AVATARS = [1, 2, 3, 4, 5, 6, 7];
 const Page = styled.div`
-  padding: 110px 0;
   margin: auto;
   width: 100%;
 `;

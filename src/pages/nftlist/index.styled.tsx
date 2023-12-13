@@ -55,7 +55,7 @@ export const MainTab1 = styled.div<{
     $bg: string
 }>`
     width: 100%;
-    background-image: url(${(props) => `/images/bg/staking_bg_${props.$bg}.png`});
+    background-image: url(${(props) => `/images/bg/${props.$bg}`});
     background-size: 100% 100%;
     background-repeat: no-repeat;
     padding: 0 24px;
