@@ -32,6 +32,7 @@ import { WalletState } from "@web3-onboard/core";
 import { useConnectWallet } from "@web3-onboard/react";
 
 
+
 const NFTList = () => {
     const [{ wallet }] = useConnectWallet()
     const [tab, setTab] = useState(0);
@@ -58,14 +59,27 @@ const NFTList = () => {
         maxBidIncreament: ""
     });
 
-    const handleImageUpload = (e, formType) => {
+    const [mintInfo, setMintInfo] = useState({
+        imageFile: Img,
+        fileType: File,
+        description: "",
+        name: "",
+        tokenId: "",
+
+    });
+
+    const handleImageUpload = async (e, formType) => {
         const imageFilefromUpload = e.target.files[0];
 
-        // const imgCID = await uploadToIpfs(imageFile)
+        console.log("file : ", imageFilefromUpload);
+
+        setMintInfo({ ...mintInfo, fileType: imageFilefromUpload, imageFile: URL.createObjectURL(e.target.files[0]) });
+
+        // const imgCID = await uploadToIpfs(imageFilefromUpload)
 
         // const json: NFTJson = {
-        //     // description: data.itemDescription,
-        //     // name: data.itemName,
+        //     description: data.itemDescription,
+        //     name: data.itemName,
         //     image: `ipfs://${imgCID}`,
         // }
 
@@ -74,11 +88,11 @@ const NFTList = () => {
         // console.log("token URI : ", tokenURI)
         // return tokenURI
 
-        if (formType === 'list') {
-            setListFormData({ ...listFormData, imageFile: imageFilefromUpload, isloading: setLoading });
-        } else {
-            setAuctionFormData({ ...auctionFormData, imageFile: imageFilefromUpload, isloading: setLoading });
-        }
+        // if (formType === 'list') {
+        //     setListFormData({ ...listFormData, imageFile: imageFilefromUpload, isloading: setLoading });
+        // } else {
+        //     setAuctionFormData({ ...auctionFormData, imageFile: imageFilefromUpload, isloading: setLoading });
+        // }
     }
 
     // const fetchUri = async (param) => {
@@ -97,44 +111,62 @@ const NFTList = () => {
 
     // }
 
+    const handleMint = async () => {
+        console.log('mint info:', mintInfo);
+
+        const imgCID = await uploadToIpfs(mintInfo.fileType)
+
+        const json = {
+            description: mintInfo.description,
+            name: mintInfo.name,
+            image: `ipfs://${imgCID}`,
+        }
+
+        console.log(JSON.stringify(json))
+        const tokenURI = await uploadJson(json)
+        console.log("token URI : ", tokenURI)
+        return tokenURI
+
+    }
+
     const handleListFormSubmit = async () => {
         console.log('List NFT Form Data:', listFormData);
-        const success = await listNFT(wallet!, listFormData, setLoading);
-        if (success) {
+        // const success = await listNFT(wallet!, listFormData, setLoading);
+        // if (success) {
 
-            console.log('NFT listed successfully!');
+        //     console.log('NFT listed successfully!');
 
-        } else {
-            console.error('Failed to list NFT!');
-        }
+        // } else {
+        //     console.error('Failed to list NFT!');
+        // }
     }
     const handleAuctionFormSubmit = async () => {
         console.log('Auction NFT Form Data:', auctionFormData);
 
-        const success = await auctionNFT(wallet!, auctionFormData, setLoading);
-        if (success) {
+        // const success = await auctionNFT(wallet!, auctionFormData, setLoading);
+        // if (success) {
 
-            console.log('NFT listed for auction sucessfully!');
+        //     console.log('NFT listed for auction sucessfully!');
 
-        } else {
-            console.error('Failed to aucion NFT!');
-        }
+        // } else {
+        //     console.error('Failed to aucion NFT!');
+        // }
     }
 
     useEffect(() => {
         if (tab == 0) {
             setBgName('Subtract.png')
-        }else if(tab == 1){
+        } else if (tab == 1) {
             setBgName('Subtract1.png')
-        }else {
+        } else {
             setBgName('Subtract2.png')
         }
     }, [tab])
 
     if (isLoading) {
         return (
-            <div style={{display:'flex', justifyContent:'center', alignItems:'center', height: '100vh'}}>
-                <ReactLoading type='spinningBubbles' color='#5D3068' height={175} width={175}  />
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <ReactLoading type='spinningBubbles' color='#5D3068' height={175} width={175} />
             </div>
         )
     } else {
@@ -151,11 +183,11 @@ const NFTList = () => {
                                 Auction NFT
                             </HeaderChild>
                             <HeaderChild onClick={() => setTab(2)}>
-                                Meanting
+                                Mint NFT
                             </HeaderChild>
                         </TabHeader>
                         {
-                            tab == 0 &&(
+                            tab == 0 && (
                                 <TabBody>
                                     <TDStar src='/images/icons/star.svg' />
                                     <MainDiv>
@@ -216,103 +248,6 @@ const NFTList = () => {
                         }
                         {
                             tab == 1 && (
-                                <TabBody>
-                                    <MainDiv>
-                                        {/* <ImageDivCol>
-                                            <CustomFile>
-                                                Image Upload
-                                                <input
-                                                    type="file"
-                                                    onChange={(e) => handleImageUpload(e, 'auction')}
-                                                />
-                                            </CustomFile>
-                                            <img src={auctionFormData.image} width={100} alt="" style={{ width: '100%' }} />
-                                        </ImageDivCol> */}
-                                    <MainContainer>
-                                        <MainRow>
-                                            <LabelTextDiv>
-                                                <LabelNam htmlFor="">NFT Contract Address</LabelNam>
-                                                <TabInput
-                                                    type="text"
-                                                    placeholder="Enter the NFT contract address"
-                                                    onChange={(e) => setAuctionFormData({ ...auctionFormData, nftContractAddress: e.target.value })}
-                                                />
-                                            </LabelTextDiv>
-                                            <LabelTextDiv>
-                                                <LabelNam htmlFor="">Token ID</LabelNam>
-                                                <TabInput
-                                                    type="text"
-                                                    placeholder="Enter the token ID"
-                                                    onChange={(e) => setAuctionFormData({ ...auctionFormData, tokenId: e.target.value })}
-                                                />
-                                            </LabelTextDiv>
-                                        </MainRow>
-                                        <MainRow>
-                                            <LabelTextDiv>
-                                                <LabelNam htmlFor="">Payment Token Address</LabelNam>
-                                                <TabInput
-                                                    type="text"
-                                                    placeholder="Enter the payment token address"
-                                                    onChange={(e) => setAuctionFormData({ ...auctionFormData, paymentTokenAddress: e.target.value })}
-                                                />
-                                            </LabelTextDiv>
-                                            <LabelTextDiv>
-                                                <LabelNam htmlFor="">Minimum bid</LabelNam>
-                                                <TabInput
-                                                    type="text"
-                                                    placeholder="Enter the minimum bid amount"
-                                                    onChange={(e) => setAuctionFormData({ ...auctionFormData, minAmount: e.target.value })}
-                                                />
-                                            </LabelTextDiv>
-                                        </MainRow>
-                                        <MainRow>
-                                            <MainRowDate>
-                                                <LabelTextDiv>
-                                                    <LabelNam htmlFor="">Start</LabelNam>
-                                                    <TabInput
-                                                        type="date"
-                                                        placeholder="dd/mm/yyyy"
-                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, start: e.target.value })}
-                                                    />
-                                                </LabelTextDiv>
-                                                <LabelTextDiv>
-                                                    <LabelNam htmlFor="">End</LabelNam>
-                                                    <TabInput
-                                                        type="date"
-                                                        placeholder="dd/mm/yyyy"
-                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, end: e.target.value })}
-                                                    />
-                                                </LabelTextDiv>
-                                            </MainRowDate>
-                                            <MainRowDate>
-                                                <LabelTextDiv>
-                                                    <LabelNam htmlFor="">Minimum Bid Increament</LabelNam>
-                                                    <TabInput
-                                                        type="number"
-                                                        placeholder="0.1"
-                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, minBidIncreament: e.target.value })}
-                                                    />
-                                                </LabelTextDiv>
-                                                {/* <LabelTextDiv>
-                                                        <LabelNam htmlFor="">Max</LabelNam>
-                                                        <TabInput
-                                                            type="number"
-                                                            placeholder="0.1"
-                                                            onChange={(e) => setAuctionFormData({ ...auctionFormData, max: e.target.value })}
-                                                        />
-                                                    </LabelTextDiv> */}
-                                                </MainRowDate>
-                                            </MainRow>
-                                            <SaveBtn onClick={handleAuctionFormSubmit}>
-                                                Submit
-                                            </SaveBtn>
-                                        </MainContainer>
-                                    </MainDiv>
-                                </TabBody>
-                                )
-                        }
-                        {
-                            tab == 2 && (
                                 <TabBody>
                                     <MainDiv>
                                         {/* <ImageDivCol>
@@ -406,7 +341,75 @@ const NFTList = () => {
                                         </MainContainer>
                                     </MainDiv>
                                 </TabBody>
-                                )
+                            )
+                        }
+                        {
+                            tab == 2 && (
+                                <TabBody>
+                                    <MainDiv>
+                                        <ImageDivCol>
+                                            <CustomFile>
+                                                Image Upload
+                                                <input
+                                                    type="file"
+                                                    //   className="d-none"
+                                                    // @ts-ignore
+                                                    onChange={(e) => handleImageUpload(e)}
+                                                // onChange={(e) => setVotingImage(e.target.files[0])}
+                                                />
+                                            </CustomFile>
+                                            {
+                                                mintInfo && (
+                                                    //@ts-ignore
+                                                    <img src={mintInfo.imageFile} width={100} alt="" style={{ width: '100%' }} />
+                                                )
+                                            }
+                                        </ImageDivCol>
+                                        <MainContainer>
+                                            <MainRow>
+                                                <LabelTextDiv>
+                                                    <LabelNam htmlFor="">NFT name</LabelNam>
+                                                    <TabInput
+                                                        type="text"
+                                                        placeholder="Enter the NFT  name"
+                                                        onChange={(e) => setMintInfo({ ...mintInfo, name: e.target.value })}
+                                                    />
+                                                </LabelTextDiv>
+                                                <LabelTextDiv>
+                                                    <LabelNam htmlFor="">Description</LabelNam>
+                                                    <TabInput
+                                                        type="text"
+                                                        placeholder="Enter the nft description"
+                                                        onChange={(e) => setMintInfo({ ...mintInfo, description: e.target.value })}
+                                                    />
+                                                </LabelTextDiv>
+                                            </MainRow>
+                                            {/* <MainRow>
+                                                <LabelTextDiv>
+                                                    <LabelNam htmlFor="">Payment Token Address</LabelNam>
+                                                    <TabInput
+                                                        type="text"
+                                                        placeholder="Enter the payment token address"
+                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, paymentTokenAddress: e.target.value })}
+                                                    />
+                                                </LabelTextDiv>
+                                                <LabelTextDiv>
+                                                    <LabelNam htmlFor="">Minimum bid</LabelNam>
+                                                    <TabInput
+                                                        type="text"
+                                                        placeholder="Enter the minimum bid amount"
+                                                        onChange={(e) => setAuctionFormData({ ...auctionFormData, minAmount: e.target.value })}
+                                                    />
+                                                </LabelTextDiv>
+                                            </MainRow> */}
+
+                                            <SaveBtn onClick={handleMint}>
+                                                Submit
+                                            </SaveBtn>
+                                        </MainContainer>
+                                    </MainDiv>
+                                </TabBody>
+                            )
                         }
                     </MainTab1>
                 </PageBody>
